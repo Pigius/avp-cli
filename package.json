@@ -1,0 +1,22 @@
+{
+  "name": "avp-cli",
+  "version": "1.0.0",
+  "description": "Small CLI to help interacts with the AWS Verified Permissions (AVP) service.",
+  "main": "index.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pigius/avp-cli.git"
+  },
+  "author": "Daniel Aniszkiewicz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pigius/avp-cli/issues"
+  },
+  "homepage": "https://github.com/Pigius/avp-cli",
+  "dependencies": {
+    "@aws-sdk/client-verifiedpermissions": "^3.364.0",
+    "cli-table": "^0.3.11",
+    "inquirer": "^9.1.5"
+  }
+}

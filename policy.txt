@@ -1,0 +1,5 @@
+permit (
+    principal,
+    action in [EcommercePlatform::Action::"Edit"],
+    resource
+);
