@@ -24,6 +24,11 @@ export const getAnswers = () => {
               type: "list",
               choices: [
                 { name: "Documents Scenario", value: "documentsScenario" },
+                {
+                  name: "Ecommerce with Context Scenario",
+                  value: "ecommerceContextScenario",
+                },
+
                 { name: "Back", value: "back" },
               ],
             },

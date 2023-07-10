@@ -33,6 +33,9 @@ const interactiveMode = async () => {
         case "documentsScenario":
           await useScenario("documentsScenario");
           break;
+        case "ecommerceContextScenario":
+          await useScenario("ecommerceContextScenario");
+          break;
         case "createPolicyStore":
           await createPolicyStore(answers.validationMode);
           break;

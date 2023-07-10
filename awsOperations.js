@@ -285,6 +285,9 @@ export const useScenario = async (scenarioName) => {
   const scenario = JSON.parse(scenarioData);
 
   if (scenario) {
+    console.log(`Starting creating scenario: ${scenario.name}`);
+    console.log(`description: ${scenario.description}`);
+
     const policyStoreId = await createPolicyStore(
       scenario.validationMode,
       false

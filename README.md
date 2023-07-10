@@ -178,6 +178,15 @@ Scenarios are predefined sets of policies (policy store, schema, and policies) t
 
 To use a scenario, select "Use prepared scenarios" from the main menu, then select the scenario you want to use. The CLI will run all the operations defined in the scenario.
 
+### Added scenarios
+
+| Scenario Name                                                                                             | Description                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [Documents Scenario](scenarios/documentsScenario/documentsScenario.json)                                  | This is a basic scenario with a document management platform schema and two policies.                                           |
+| [Ecommerce with Context usage Scenario](scenarios/ecommerceContextScenario/ecommerceContextScenario.json) | This scenario demonstrates the use of context in AVP. It allows customers to view products only when they are in the US region. |
+
+Soon I will add more scenarios.
+
 ### Scenario Structure
 
 A scenario is defined in a JSON file with the following structure:
