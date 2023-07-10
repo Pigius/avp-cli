@@ -182,7 +182,7 @@ To use a scenario, select "Use prepared scenarios" from the main menu, then sele
 
 A scenario is defined in a JSON file with the following structure:
 
-````json
+```json
 {
   "validationMode": "STRICT",
   "schemaPath": "./path/to/schema.json",
@@ -197,8 +197,9 @@ A scenario is defined in a JSON file with the following structure:
     }
   ]
 }
+```
 
-Example:
+### Example:
 
 ```bash
 
@@ -238,8 +239,3 @@ I'm planning to continue improving this tool. Here are some of the next steps I 
 - **Policy Templates**: I'm planning to add policy templates to the tool, making it easier to create new policies.
 
 Stay tuned for these and other improvements!
-
-```
-
-```
-````
