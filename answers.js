@@ -28,6 +28,10 @@ export const getAnswers = () => {
                   name: "Ecommerce with Context Scenario",
                   value: "ecommerceContextScenario",
                 },
+                {
+                  name: "Ecommerce with Group Scenario",
+                  value: "ecommerceGroupScenario",
+                },
 
                 { name: "Back", value: "back" },
               ],

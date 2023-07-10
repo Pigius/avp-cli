@@ -36,6 +36,9 @@ const interactiveMode = async () => {
         case "ecommerceContextScenario":
           await useScenario("ecommerceContextScenario");
           break;
+        case "ecommerceGroupScenario":
+          await useScenario("ecommerceGroupScenario");
+          break;
         case "createPolicyStore":
           await createPolicyStore(answers.validationMode);
           break;
