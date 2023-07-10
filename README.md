@@ -8,6 +8,12 @@ The AWS Verified Permissions (AVP) service is a powerful tool for managing permi
 
 This tool is intended for learning and prototyping. It provides a quick and easy way to interact with the AVP service, allowing you to create, manage, and delete policy stores, schemas, and policies. However, it's not intended for production workloads.
 
+## Setup
+
+1. Clone the repository.
+2. Run `npm install` to install the dependencies.
+3. Ensure that you have set up your AWS credentials correctly to use this tool.
+
 ## Prerequisites
 
 Before you can use this tool, you need to set up your AWS credentials on your local machine. If you're using a MacBook, you can do this by adding the following to your `~/.aws/credentials` file:
@@ -54,6 +60,7 @@ Please ensure that you have set up your AWS credentials correctly to use this to
 
 The tool provides the following actions:
 
+- Use prepared scenarios
 - List all policy stores
 - Create a policy store
 - Get a policy store
@@ -165,11 +172,60 @@ permit (
 
 You can create files with these contents and then provide the paths to these files when prompted by the tool.
 
+## Scenarios
+
+Scenarios are predefined sets of policies (policy store, schema, and policies) that you can run to interact with the AVP service. Each scenario is defined in a JSON file and includes a validation mode, a schema, and a set of policies.
+
+To use a scenario, select "Use prepared scenarios" from the main menu, then select the scenario you want to use. The CLI will run all the operations defined in the scenario.
+
+### Scenario Structure
+
+A scenario is defined in a JSON file with the following structure:
+
+````json
+{
+  "validationMode": "STRICT",
+  "schemaPath": "./path/to/schema.json",
+  "policies": [
+    {
+      "path": "./path/to/policy1.txt",
+      "description": "Description of policy 1"
+    },
+    {
+      "path": "./path/to/policy2.txt",
+      "description": "Description of policy 2"
+    }
+  ]
+}
+
+Example:
+
+```bash
+
+Welcome to AVP CLI!
+This tool is designed to help you interact with the AWS Verified Permissions (AVP) service. You can use it to create, manage, and delete policy stores, schemas, and policies.
+Please ensure that you have set up your AWS credentials correctly to use this tool.
+? What would you like to do? Use prepared scenarios
+? Choose a scenario Documents Scenario
+Policy store created with ID: CZqBzBwt9sR6cmFoZTLTAT
+Schema put successfully for policy store ID: CZqBzBwt9sR6cmFoZTLTAT
+Static policy created with ID: 4D71i9mo7r6ZPjNndCJUX8
+Static policy created with ID: 8rfLZU2ta5mcBYU5uaUNmu
+┌────────────────────────────────────────┬────────────────────────────────────────┬────────────────────────────────────────┐
+│ Policy ID                              │ Policy Store ID                        │ Created Date                           │
+├────────────────────────────────────────┼────────────────────────────────────────┼────────────────────────────────────────┤
+│ 4D71i9mo7r6ZPjNndCJUX8                 │ CZqBzBwt9sR6cmFoZTLTAT                 │ Mon Jul 10 2023 10:13:54 GMT+0200 (Ce… │
+├────────────────────────────────────────┼────────────────────────────────────────┼────────────────────────────────────────┤
+│ 8rfLZU2ta5mcBYU5uaUNmu                 │ CZqBzBwt9sR6cmFoZTLTAT                 │ Mon Jul 10 2023 10:13:54 GMT+0200 (Ce… │
+└────────────────────────────────────────┴────────────────────────────────────────┴────────────────────────────────────────┘
+Generating of the documentsScenario is finished. Open the AWS console to play around with that.
+```
+
 ## Next Steps
 
 I'm planning to continue improving this tool. Here are some of the next steps I am considering:
 
-- **Prepared Scenarios**: I'm planning to add prepared scenarios that you can deploy within AWS. This will make it easier to get started with the tool and learn how to use the AVP service.
+~~- **Prepared Scenarios**: I'm planning to add prepared scenarios that you can deploy within AWS. This will make it easier to get started with the tool and learn how to use the AVP service.~~
 
 - **Better Error Handling**: I'm planning to improve the error handling in the tool to make it more robust and user-friendly.
 
@@ -182,3 +238,8 @@ I'm planning to continue improving this tool. Here are some of the next steps I 
 - **Policy Templates**: I'm planning to add policy templates to the tool, making it easier to create new policies.
 
 Stay tuned for these and other improvements!
+
+```
+
+```
+````

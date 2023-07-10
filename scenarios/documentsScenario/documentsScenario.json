@@ -1,0 +1,16 @@
+{
+  "validationMode": "STRICT",
+  "name": "Documents Scenario",
+  "description": "This is a basic scenario with a document management platform schema and two policies.",
+  "schemaPath": "./scenarios/documentsScenario/schema.json",
+  "policies": [
+    {
+      "path": "./scenarios/documentsScenario/allow_policy.txt",
+      "description": "Allow all users to view all documents"
+    },
+    {
+      "path": "./scenarios/documentsScenario/deny_policy.txt",
+      "description": "Forbid user X from viewing any documents"
+    }
+  ]  
+}

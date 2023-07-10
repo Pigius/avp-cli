@@ -11,6 +11,7 @@ import {
   listPolicyStores,
   putSchema,
   updateStaticPolicy,
+  useScenario,
 } from "./awsOperations.js";
 
 console.log("Welcome to AVP CLI!");
@@ -21,47 +22,64 @@ console.log(
   "Please ensure that you have set up your AWS credentials correctly to use this tool."
 );
 
-async function interactiveMode() {
+const interactiveMode = async () => {
   let exit = false;
 
   while (!exit) {
     try {
       const answers = await getAnswers();
 
-      console.log("Processing your request...");
-      if (answers.action === "createPolicyStore") {
-        await createPolicyStore(answers.validationMode);
-      } else if (answers.action === "createStaticPolicy") {
-        await createStaticPolicy(
-          answers.policyStoreId,
-          answers.policyPath,
-          answers.description
-        );
-      } else if (answers.action === "deletePolicy") {
-        await deletePolicy(answers.policyStoreId, answers.policyId);
-      } else if (answers.action === "deletePolicyStore") {
-        await deletePolicyStore(answers.policyStoreId);
-      } else if (answers.action === "getPolicy") {
-        await getPolicy(answers.policyStoreId, answers.policyId);
-      } else if (answers.action === "getPolicyStore") {
-        await getPolicyStore(answers.policyStoreId);
-      } else if (answers.action === "getSchema") {
-        await getSchema(answers.policyStoreId);
-      } else if (answers.action === "listPolicies") {
-        await listPolicies(answers.policyStoreId);
-      } else if (answers.action === "listPolicyStores") {
-        await listPolicyStores();
-      } else if (answers.action === "putSchema") {
-        await putSchema(answers.policyStoreId, answers.pathToSchema);
-      } else if (answers.action === "updateStaticPolicy") {
-        await updateStaticPolicy(
-          answers.policyStoreId,
-          answers.policyId,
-          answers.policyPath,
-          answers.description
-        );
-      } else if (answers.action === "exit") {
-        exit = true;
+      switch (answers.action) {
+        case "documentsScenario":
+          await useScenario("documentsScenario");
+          break;
+        case "createPolicyStore":
+          await createPolicyStore(answers.validationMode);
+          break;
+        case "createStaticPolicy":
+          await createStaticPolicy(
+            answers.policyStoreId,
+            answers.policyPath,
+            answers.description
+          );
+          break;
+        case "deletePolicy":
+          await deletePolicy(answers.policyStoreId, answers.policyId);
+          break;
+        case "deletePolicyStore":
+          await deletePolicyStore(answers.policyStoreId);
+          break;
+        case "getPolicy":
+          await getPolicy(answers.policyStoreId, answers.policyId);
+          break;
+        case "getPolicyStore":
+          await getPolicyStore(answers.policyStoreId);
+          break;
+        case "getSchema":
+          await getSchema(answers.policyStoreId);
+          break;
+        case "listPolicies":
+          await listPolicies(answers.policyStoreId);
+          break;
+        case "listPolicyStores":
+          await listPolicyStores();
+          break;
+        case "putSchema":
+          await putSchema(answers.policyStoreId, answers.pathToSchema);
+          break;
+        case "updateStaticPolicy":
+          await updateStaticPolicy(
+            answers.policyStoreId,
+            answers.policyId,
+            answers.policyPath,
+            answers.description
+          );
+          break;
+        case "exit":
+          exit = true;
+          break;
+        default:
+          console.error(`Unknown action: ${answers.action}`);
       }
     } catch (err) {
       console.error(
@@ -70,6 +88,6 @@ async function interactiveMode() {
       );
     }
   }
-}
+};
 
 interactiveMode();
