@@ -231,6 +231,10 @@ Static policy created with ID: 8rfLZU2ta5mcBYU5uaUNmu
 Generating of the documentsScenario is finished. Open the AWS console to play around with that.
 ```
 
+## Roles and Permissions
+
+This tool requires certain permissions to interact with the AWS Verified Permissions service. It is recommended to use this tool on an AWS sandbox account where admin access is granted. Always follow the principle of least privilege and only grant the necessary permissions for the tasks you need to perform.
+
 ## Next Steps
 
 I'm planning to continue improving this tool. Here are some of the next steps I am considering:
