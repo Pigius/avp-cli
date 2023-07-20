@@ -1,0 +1,25 @@
+{
+  "validationMode": "STRICT",
+  "name": "Ecommerce with Policy Template Scenario",
+  "description": "This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products.",
+  "schemaPath": "./scenarios/ecommercePolicyTemplateScenario/schema.json",
+  "policyTemplate": 
+    {
+      "path": "./scenarios/ecommercePolicyTemplateScenario/template_policy.txt",
+      "description": "Policy template that allows a seller to list a product"
+    }
+  ,
+  "templateLinkedPolicies": [
+    {
+      "principal": {
+        "entityId": "123",
+        "entityType": "EcommercePlatform::Seller"
+      },
+      "resource": {
+        "entityId": "456",
+        "entityType": "EcommercePlatform::Product"
+      },
+      "description": "Template-linked policy that allows seller 123 to list product 456"
+    }
+  ]
+}

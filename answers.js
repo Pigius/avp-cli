@@ -32,7 +32,10 @@ export const getAnswers = () => {
                   name: "Ecommerce with Group Scenario",
                   value: "ecommerceGroupScenario",
                 },
-
+                {
+                  name: "Ecommerce with Template-Linked Policies Scenario",
+                  value: "ecommercePolicyTemplateScenario",
+                },
                 { name: "Back", value: "back" },
               ],
             },
@@ -59,6 +62,8 @@ export const getAnswers = () => {
                 { name: "Delete a policy store", value: "deletePolicyStore" },
                 { name: "Add Schema to a policy store", value: "putSchema" },
                 { name: "Add Static Policy", value: "createStaticPolicy" },
+                { name: "Add Template Policy", value: "createTemplatePolicy" },
+                { name: "Add policy template", value: "createPolicyTemplate" },
                 { name: "Update Static Policy", value: "updateStaticPolicy" },
                 { name: "Get Policy", value: "getPolicy" },
                 { name: "Get Schema", value: "getSchema" },
@@ -92,7 +97,9 @@ export const getAnswers = () => {
                 answers.action === "getPolicy" ||
                 answers.action === "updateStaticPolicy" ||
                 answers.action === "deletePolicy" ||
-                answers.action === "listPolicies",
+                answers.action === "listPolicies" ||
+                answers.action === "createTemplatePolicy" ||
+                answers.action === "createPolicyTemplate",
             },
             {
               name: "pathToSchema",
@@ -115,13 +122,50 @@ export const getAnswers = () => {
               type: "input",
               when: (answers) =>
                 answers.action === "createStaticPolicy" ||
-                answers.action === "updateStaticPolicy",
+                answers.action === "updateStaticPolicy" ||
+                answers.action === "createPolicyTemplate",
             },
             {
               name: "policyDescription",
               message: "Enter the new description for the policy",
               type: "input",
               when: (answers) => answers.action === "updateStaticPolicy",
+            },
+            {
+              name: "description",
+              message: "Enter the description for the policy template",
+              type: "input",
+              when: (answers) => answers.action === "createPolicyTemplate",
+            },
+            {
+              name: "policyTemplateId",
+              message: "Enter the ID for the policy template",
+              type: "input",
+              when: (answers) => answers.action === "createTemplatePolicy",
+            },
+            {
+              name: "principalEntityType",
+              message: "Enter the entity type of the principal",
+              type: "input",
+              when: (answers) => answers.action === "createTemplatePolicy",
+            },
+            {
+              name: "principalEntityId",
+              message: "Enter the entity ID of the principal",
+              type: "input",
+              when: (answers) => answers.action === "createTemplatePolicy",
+            },
+            {
+              name: "resourceEntityType",
+              message: "Enter the entity type of the resource",
+              type: "input",
+              when: (answers) => answers.action === "createTemplatePolicy",
+            },
+            {
+              name: "resourceEntityId",
+              message: "Enter the entity ID of the resource",
+              type: "input",
+              when: (answers) => answers.action === "createTemplatePolicy",
             },
           ])
           .then((answers) => {

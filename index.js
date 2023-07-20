@@ -2,6 +2,8 @@ import { getAnswers } from "./answers.js";
 import {
   createPolicyStore,
   createStaticPolicy,
+  createPolicyTemplate,
+  createTemplatePolicy,
   deletePolicy,
   deletePolicyStore,
   getPolicy,
@@ -39,6 +41,9 @@ const interactiveMode = async () => {
         case "ecommerceGroupScenario":
           await useScenario("ecommerceGroupScenario");
           break;
+        case "ecommercePolicyTemplateScenario":
+          await useScenario("ecommercePolicyTemplateScenario");
+          break;
         case "createPolicyStore":
           await createPolicyStore(answers.validationMode);
           break;
@@ -47,6 +52,30 @@ const interactiveMode = async () => {
             answers.policyStoreId,
             answers.policyPath,
             answers.description
+          );
+          break;
+        case "createPolicyTemplate":
+          console.log(answers);
+          await createPolicyTemplate(
+            answers.policyStoreId,
+            answers.policyPath,
+            answers.description
+          );
+          break;
+        case "createTemplatePolicy":
+          const principal = {
+            entityType: answers.principalEntityType,
+            entityId: answers.principalEntityId,
+          };
+          const resource = {
+            entityType: answers.resourceEntityType,
+            entityId: answers.resourceEntityId,
+          };
+          await createTemplatePolicy(
+            answers.policyStoreId,
+            answers.policyTemplateId,
+            principal,
+            resource
           );
           break;
         case "deletePolicy":

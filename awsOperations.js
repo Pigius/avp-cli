@@ -1,6 +1,7 @@
 import {
   CreatePolicyCommand,
   CreatePolicyStoreCommand,
+  CreatePolicyTemplateCommand,
   DeletePolicyCommand,
   DeletePolicyStoreCommand,
   GetPolicyCommand,
@@ -123,7 +124,7 @@ export const createPolicyStore = async (validationMode, logOutput = true) => {
     if (logOutput) {
       console.log(`Policy store created with ID: ${response.policyStoreId}`);
     }
-    return response.policyStoreId; // return the policyStoreId
+    return response.policyStoreId;
   } catch (error) {
     console.error(`Failed to create policy store: ${error.message}`);
   }
@@ -233,6 +234,34 @@ export const createStaticPolicy = async (
   }
 };
 
+export const createPolicyTemplate = async (
+  policyStoreId,
+  policyPath,
+  description,
+  logOutput = true
+) => {
+  const policy = fs.readFileSync(policyPath, "utf8");
+
+  const params = {
+    policyStoreId: policyStoreId,
+    statement: policy,
+    description: description,
+  };
+  try {
+    const response = await client.send(new CreatePolicyTemplateCommand(params));
+    if (logOutput) {
+      console.log(`Policy template created successfully.`);
+    }
+    return response;
+  } catch (error) {
+    if (logOutput) {
+      console.error(
+        `An error occurred while creating the policy template: ${error}`
+      );
+    }
+  }
+};
+
 export const deletePolicy = async (
   policyStoreId,
   policyId,
@@ -279,11 +308,82 @@ export const listPolicies = async (policyStoreId, logOutput = true) => {
   }
 };
 
+const handleTemplateLinkedPoliciesScenario = async (
+  policyStoreId,
+  scenario
+) => {
+  const policyTemplate = scenario.policyTemplate;
+  const createdPolicyTemplate = await createPolicyTemplate(
+    policyStoreId,
+    policyTemplate.path,
+    policyTemplate.description,
+    false
+  );
+  console.log(
+    `Policy template created with ID: ${createdPolicyTemplate.policyTemplateId}`
+  );
+  const policyTemplateId = createdPolicyTemplate.policyTemplateId;
+
+  const templateLinkedPolicies = [];
+  for (const templateLinkedPolicy of scenario.templateLinkedPolicies) {
+    const principal = {
+      entityType: templateLinkedPolicy.principal.entityType,
+      entityId: templateLinkedPolicy.principal.entityId,
+    };
+    const resource = {
+      entityType: templateLinkedPolicy.resource.entityType,
+      entityId: templateLinkedPolicy.resource.entityId,
+    };
+
+    const createdTemplateLinkedPolicy = await createTemplatePolicy(
+      policyStoreId,
+      policyTemplateId,
+      principal,
+      resource,
+      false
+    );
+    console.log(
+      `Template-linked policy created with ID: ${createdTemplateLinkedPolicy.policyId}`
+    );
+    templateLinkedPolicies.push({
+      ...createdTemplateLinkedPolicy,
+      principal,
+      resource,
+      policyTemplate: policyTemplate.description,
+    });
+  }
+
+  const table = new Table({
+    head: [
+      "Template-Linked Policy ID",
+      "Policy Store ID",
+      "Created Date",
+      "Principal",
+      "Resource",
+      "Policy Template",
+    ],
+    colWidths: [40, 40, 40, 40, 40, 40],
+  });
+
+  for (const policy of templateLinkedPolicies) {
+    table.push([
+      policy.policyId,
+      policyStoreId,
+      policy.createdDate,
+      `${policy.principal.entityType}::${policy.principal.entityId}`,
+      `${policy.resource.entityType}::${policy.resource.entityId}`,
+      policy.policyTemplate,
+    ]);
+  }
+  console.log(table.toString());
+};
+
 export const useScenario = async (scenarioName) => {
+  console.log("scenarioName", scenarioName);
   const scenarioPath = `./scenarios/${scenarioName}/${scenarioName}.json`;
   const scenarioData = fs.readFileSync(scenarioPath, "utf-8");
   const scenario = JSON.parse(scenarioData);
-
+  console.log("scenario", scenario);
   if (scenario) {
     console.log(`Starting creating scenario: ${scenario.name}`);
     console.log(`description: ${scenario.description}`);
@@ -300,32 +400,73 @@ export const useScenario = async (scenarioName) => {
         `Schema put successfully for policy store ID: ${policyStoreId}`
       );
 
-      const policies = [];
-      for (const policy of scenario.policies) {
-        const createdPolicy = await createStaticPolicy(
-          policyStoreId,
-          policy.path,
-          policy.description,
-          false
-        );
-        console.log(`Static policy created with ID: ${createdPolicy.policyId}`);
-        policies.push(createdPolicy);
-      }
+      if (scenarioName === "ecommercePolicyTemplateScenario") {
+        await handleTemplateLinkedPoliciesScenario(policyStoreId, scenario);
+      } else {
+        const policies = [];
+        for (const policy of scenario.policies) {
+          const createdPolicy = await createStaticPolicy(
+            policyStoreId,
+            policy.path,
+            policy.description,
+            false
+          );
+          console.log(
+            `Static policy created with ID: ${createdPolicy.policyId}`
+          );
+          policies.push(createdPolicy);
+        }
 
-      const table = new Table({
-        head: ["Policy ID", "Policy Store ID", "Created Date"],
-        colWidths: [40, 40, 40],
-      });
+        const table = new Table({
+          head: ["Policy ID", "Policy Store ID", "Created Date"],
+          colWidths: [40, 40, 40],
+        });
 
-      for (const policy of policies) {
-        table.push([policy.policyId, policyStoreId, policy.createdDate]);
+        for (const policy of policies) {
+          table.push([policy.policyId, policyStoreId, policy.createdDate]);
+        }
+        console.log(table.toString());
       }
-      console.log(table.toString());
       console.log(
         `Generating of the ${scenarioName} is finished. Open the AWS console to play around with that.`
       );
     }
   } else {
     console.error(`Scenario ${scenarioName} not found`);
+  }
+};
+
+export const createTemplatePolicy = async (
+  policyStoreId,
+  policyTemplateId,
+  principal,
+  resource,
+  logOutput = true
+) => {
+  const input = {
+    policyStoreId,
+    definition: {
+      templateLinked: {
+        policyTemplateId,
+        principal,
+        resource,
+      },
+    },
+  };
+  const command = new CreatePolicyCommand(input);
+
+  try {
+    if (logOutput) {
+      console.log("Creating a template-linked policy...");
+    }
+    const response = await client.send(command);
+    if (logOutput) {
+      console.log(
+        `Template-linked policy created with ID: ${response.policyId}`
+      );
+    }
+    return response;
+  } catch (error) {
+    console.error(`Failed to create template-linked policy: ${error.message}`);
   }
 };
