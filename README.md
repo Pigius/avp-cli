@@ -182,12 +182,12 @@ To use a scenario, select "Use prepared scenarios" from the main menu, then sele
 
 ### Added scenarios
 
-| Scenario Name                                                                                                          | Description                                                                                                                                                    |
-| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Documents Scenario](scenarios/documentsScenario/documentsScenario.json)                                               | This is a basic scenario with a document management platform schema and two policies.                                                                          |
-| [Ecommerce with Context usage Scenario](scenarios/ecommerceContextScenario/ecommerceContextScenario.json)              | This scenario demonstrates the use of context in AVP. It allows customers to view products only when they are in the US region.                                |
-| [Ecommerce with Group usage Scenario](scenarios/ecommerceGroupScenario/ecommerceGroupScenario.json)                    | This scenario demonstrates the use of Groups in AWS Verified Permissions. It allows customers who belong to the VIP group to preorder products.                |
-| [Ecommerce with Policy Template usage Scenario](scenarios/ecommerceGroupScenario/ecommercePolicyTemplateScenario.json) | This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products. |
+| Scenario Name                                                                                                                   | Description                                                                                                                                                    |
+| ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Documents Scenario](scenarios/documentsScenario/documentsScenario.json)                                                        | This is a basic scenario with a document management platform schema and two policies.                                                                          |
+| [Ecommerce with Context usage Scenario](scenarios/ecommerceContextScenario/ecommerceContextScenario.json)                       | This scenario demonstrates the use of context in AVP. It allows customers to view products only when they are in the US region.                                |
+| [Ecommerce with Group usage Scenario](scenarios/ecommerceGroupScenario/ecommerceGroupScenario.json)                             | This scenario demonstrates the use of Groups in AWS Verified Permissions. It allows customers who belong to the VIP group to preorder products.                |
+| [Ecommerce with Policy Template usage Scenario](scenarios/ecommercePolicyTemplateScenario/ecommercePolicyTemplateScenario.json) | This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products. |
 
 Soon I will add more scenarios.
 
