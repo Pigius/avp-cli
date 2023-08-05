@@ -1,4 +1,5 @@
 import {
+  CreateIdentitySourceCommand,
   CreatePolicyCommand,
   CreatePolicyStoreCommand,
   CreatePolicyTemplateCommand,
@@ -378,12 +379,15 @@ const handleTemplateLinkedPoliciesScenario = async (
   console.log(table.toString());
 };
 
-export const useScenario = async (scenarioName) => {
-  console.log("scenarioName", scenarioName);
+export const useScenario = async (
+  scenarioName,
+  userPoolArn = null,
+  appClientId = null
+) => {
   const scenarioPath = `./scenarios/${scenarioName}/${scenarioName}.json`;
   const scenarioData = fs.readFileSync(scenarioPath, "utf-8");
   const scenario = JSON.parse(scenarioData);
-  console.log("scenario", scenario);
+
   if (scenario) {
     console.log(`Starting creating scenario: ${scenario.name}`);
     console.log(`description: ${scenario.description}`);
@@ -402,6 +406,13 @@ export const useScenario = async (scenarioName) => {
 
       if (scenarioName === "ecommercePolicyTemplateScenario") {
         await handleTemplateLinkedPoliciesScenario(policyStoreId, scenario);
+      } else if (scenarioName === "ecommerceCognitoIntegrationScenario") {
+        await handleCognitoIntegrationScenario(
+          policyStoreId,
+          scenario,
+          userPoolArn,
+          appClientId
+        );
       } else {
         const policies = [];
         for (const policy of scenario.policies) {
@@ -469,4 +480,71 @@ export const createTemplatePolicy = async (
   } catch (error) {
     console.error(`Failed to create template-linked policy: ${error.message}`);
   }
+};
+
+export const createIdentitySource = async (
+  policyStoreId,
+  principalEntityType,
+  userPoolArn,
+  appClientId
+) => {
+  const input = {
+    policyStoreId,
+    principalEntityType: principalEntityType,
+    configuration: {
+      cognitoUserPoolConfiguration: {
+        userPoolArn: userPoolArn,
+        clientIds: [appClientId],
+      },
+    },
+  };
+  const command = new CreateIdentitySourceCommand(input);
+
+  try {
+    console.log("Creating an identity source...");
+    const response = await client.send(command);
+    console.log(
+      `Identity source created with ID: ${response.identitySourceId}`
+    );
+    return response;
+  } catch (error) {
+    console.error(`Failed to create identity source: ${error.message}`);
+  }
+};
+
+export const handleCognitoIntegrationScenario = async (
+  policyStoreId,
+  scenario,
+  userPoolArn,
+  appClientId
+) => {
+  await createIdentitySource(
+    policyStoreId,
+    scenario.principalEntityType,
+    userPoolArn,
+    appClientId
+  );
+  const policies = [];
+
+  for (const policy of scenario.policies) {
+    const createdPolicy = await createStaticPolicy(
+      policyStoreId,
+      policy.path,
+      policy.description,
+      false
+    );
+    console.log(`Static policy created with ID: ${createdPolicy.policyId}`);
+    policies.push(createdPolicy);
+  }
+  const table = new Table({
+    head: ["Policy ID", "Policy Store ID", "Created Date"],
+    colWidths: [40, 40, 40],
+  });
+  for (const policy of policies) {
+    table.push([policy.policyId, policyStoreId, policy.createdDate]);
+  }
+  console.log(table.toString());
+  console.log(
+    `Generating of the ${scenario.scenarioName} is finished. Open the AWS console to play around with that.`
+  );
 };

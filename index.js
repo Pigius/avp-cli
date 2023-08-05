@@ -55,7 +55,6 @@ const interactiveMode = async () => {
           );
           break;
         case "createPolicyTemplate":
-          console.log(answers);
           await createPolicyTemplate(
             answers.policyStoreId,
             answers.policyPath,
@@ -76,6 +75,13 @@ const interactiveMode = async () => {
             answers.policyTemplateId,
             principal,
             resource
+          );
+          break;
+        case "ecommerceCognitoIntegrationScenario":
+          await useScenario(
+            "ecommerceCognitoIntegrationScenario",
+            answers.userPoolArn,
+            answers.appClientId
           );
           break;
         case "deletePolicy":

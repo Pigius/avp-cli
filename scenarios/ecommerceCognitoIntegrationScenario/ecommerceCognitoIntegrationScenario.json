@@ -1,0 +1,13 @@
+{
+  "validationMode": "STRICT",
+  "name": "Ecommerce with Cognito Integration Scenario",
+  "description": "This scenario demonstrates the integration of AWS Verified Permissions with Amazon Cognito. It allows sellers to list their own products and uses Cognito for identity management.",
+  "schemaPath": "./scenarios/ecommerceCognitoIntegrationScenario/schema.json",
+  "principalEntityType": "MyEcommerceApp::Seller",
+  "policies": [
+    {
+      "path": "./scenarios/ecommerceCognitoIntegrationScenario/allow_policy.txt",
+      "description": "Allow sellers to discount if they have the agreed discount privilege."
+    }
+  ]
+}

@@ -36,6 +36,10 @@ export const getAnswers = () => {
                   name: "Ecommerce with Template-Linked Policies Scenario",
                   value: "ecommercePolicyTemplateScenario",
                 },
+                {
+                  name: "Ecommerce with Cognito Integration Scenario",
+                  value: "ecommerceCognitoIntegrationScenario",
+                },
                 { name: "Back", value: "back" },
               ],
             },
@@ -43,6 +47,28 @@ export const getAnswers = () => {
           .then((scenarioAnswers) => {
             if (scenarioAnswers.scenario === "back") {
               return getAnswers();
+            } else if (
+              scenarioAnswers.scenario === "ecommerceCognitoIntegrationScenario"
+            ) {
+              return inquirer
+                .prompt([
+                  {
+                    name: "userPoolArn",
+                    message: "Enter the ARN of the Cognito User Pool",
+                    type: "input",
+                  },
+                  {
+                    name: "appClientId",
+                    message: "Enter the App Client ID",
+                    type: "input",
+                  },
+                ])
+                .then((cognitoAnswers) => {
+                  return {
+                    action: scenarioAnswers.scenario,
+                    ...cognitoAnswers,
+                  };
+                });
             } else {
               answers.action = scenarioAnswers.scenario;
               return answers;
@@ -166,6 +192,22 @@ export const getAnswers = () => {
               message: "Enter the entity ID of the resource",
               type: "input",
               when: (answers) => answers.action === "createTemplatePolicy",
+            },
+            {
+              name: "userPoolArn",
+              message: "Enter the Amazon Cognito User Pool ARN",
+              type: "input",
+              when: (scenarioAnswers) =>
+                scenarioAnswers.scenario ===
+                "ecommerceCognitoIntegrationScenario",
+            },
+            {
+              name: "appClientId",
+              message: "Enter the Amazon Cognito App Client ID",
+              type: "input",
+              when: (scenarioAnswers) =>
+                scenarioAnswers.scenario ===
+                "ecommerceCognitoIntegrationScenario",
             },
           ])
           .then((answers) => {
