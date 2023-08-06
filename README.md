@@ -206,11 +206,11 @@ A scenario is defined in a JSON file with the following structure:
   "schemaPath": "./path/to/schema.json",
   "policies": [
     {
-      "path": "./path/to/policy1.txt",
+      "path": "./path/to/policy1.cedar",
       "description": "Description of policy 1"
     },
     {
-      "path": "./path/to/policy2.txt",
+      "path": "./path/to/policy2.cedar",
       "description": "Description of policy 2"
     }
   ]

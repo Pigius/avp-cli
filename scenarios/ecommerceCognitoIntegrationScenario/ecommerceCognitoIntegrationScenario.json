@@ -6,7 +6,7 @@
   "principalEntityType": "MyEcommerceApp::Seller",
   "policies": [
     {
-      "path": "./scenarios/ecommerceCognitoIntegrationScenario/allow_policy.txt",
+      "path": "./scenarios/ecommerceCognitoIntegrationScenario/allow_policy.cedar",
       "description": "Allow sellers to discount if they have the agreed discount privilege."
     }
   ]

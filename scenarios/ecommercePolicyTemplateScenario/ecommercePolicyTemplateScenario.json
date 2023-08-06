@@ -5,7 +5,7 @@
   "schemaPath": "./scenarios/ecommercePolicyTemplateScenario/schema.json",
   "policyTemplate": 
     {
-      "path": "./scenarios/ecommercePolicyTemplateScenario/template_policy.txt",
+      "path": "./scenarios/ecommercePolicyTemplateScenario/template_policy.cedar",
       "description": "Policy template that allows a seller to list a product"
     }
   ,

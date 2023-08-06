@@ -5,7 +5,7 @@
   "schemaPath": "./scenarios/ecommerceGroupScenario/schema.json",
   "policies": [
     {
-      "path": "./scenarios/ecommerceGroupScenario/allow_policy.txt",
+      "path": "./scenarios/ecommerceGroupScenario/allow_policy.cedar",
       "description": "Allow preordering of products for customers belonging to the VIP group"
     }
   ]  

@@ -5,7 +5,7 @@
   "schemaPath": "./scenarios/ecommerceContextScenario/schema.json",
   "policies": [
     {
-      "path": "./scenarios/ecommerceContextScenario/allow_policy.txt",
+      "path": "./scenarios/ecommerceContextScenario/allow_policy.cedar",
       "description": "Allow viewing of products for customers in the US region"
     }
   ]  

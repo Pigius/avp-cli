@@ -5,11 +5,11 @@
   "schemaPath": "./scenarios/documentsScenario/schema.json",
   "policies": [
     {
-      "path": "./scenarios/documentsScenario/allow_policy.txt",
+      "path": "./scenarios/documentsScenario/allow_policy.cedar",
       "description": "Allow all users to view all documents"
     },
     {
-      "path": "./scenarios/documentsScenario/deny_policy.txt",
+      "path": "./scenarios/documentsScenario/deny_policy.cedar",
       "description": "Forbid user X from viewing any documents"
     }
   ]  
