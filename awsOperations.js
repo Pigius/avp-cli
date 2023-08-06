@@ -8,6 +8,7 @@ import {
   GetPolicyCommand,
   GetPolicyStoreCommand,
   GetSchemaCommand,
+  IsAuthorizedCommand,
   ListPoliciesCommand,
   ListPolicyStoresCommand,
   PutSchemaCommand,
@@ -509,6 +510,49 @@ export const createIdentitySource = async (
     return response;
   } catch (error) {
     console.error(`Failed to create identity source: ${error.message}`);
+  }
+};
+
+export const IsAuthorized = async (
+  policyStoreId,
+  principalEntityType,
+  principalEntityId,
+  actionEntityType,
+  actionEntityId,
+  resourceEntityType,
+  resourceEntityId
+) => {
+  const input = {
+    policyStoreId,
+    principal: {
+      entityType: principalEntityType,
+      entityId: principalEntityId,
+    },
+    action: {
+      actionType: actionEntityType,
+      actionId: actionEntityId,
+    },
+    resource: {
+      entityType: resourceEntityType,
+      entityId: resourceEntityId,
+    },
+    context: {
+      contextMap: {},
+    },
+  };
+
+  const command = new IsAuthorizedCommand(input);
+
+  try {
+    console.log("Making authorization decision...");
+    const response = await client.send(command);
+
+    console.log("Decision:", response.decision);
+    console.log("Determining Policies:", response.determiningPolicies);
+    console.log("Errors:", response.errors);
+    return response;
+  } catch (error) {
+    console.error(`Failed to make authorization decision: ${error.message}`);
   }
 };
 

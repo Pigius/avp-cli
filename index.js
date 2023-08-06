@@ -9,6 +9,7 @@ import {
   getPolicy,
   getPolicyStore,
   getSchema,
+  IsAuthorized,
   listPolicies,
   listPolicyStores,
   putSchema,
@@ -32,6 +33,17 @@ const interactiveMode = async () => {
       const answers = await getAnswers();
 
       switch (answers.action) {
+        case "isAuthorized":
+          await IsAuthorized(
+            answers.policyStoreId,
+            answers.principalEntityType,
+            answers.principalEntityId,
+            answers.actionEntityType,
+            answers.actionEntityId,
+            answers.resourceEntityType,
+            answers.resourceEntityId
+          );
+          break;
         case "documentsScenario":
           await useScenario("documentsScenario");
           break;
