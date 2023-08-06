@@ -18,7 +18,7 @@ import {
 } from "@aws-sdk/client-verifiedpermissions";
 import fs from "fs";
 import path from "path";
-import Table from "cli-table";
+import Table from "cli-table3";
 
 const client = new VerifiedPermissionsClient();
 
@@ -29,6 +29,8 @@ export const listPolicyStores = async (logOutput = true) => {
     const table = new Table({
       head: ["ID", "ARN", "Created Date"],
       colWidths: [24, 80, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
     });
     response.policyStores.forEach((store) => {
       table.push([store.policyStoreId, store.arn, store.createdDate]);
@@ -65,6 +67,8 @@ export const getPolicy = async (policyStoreId, policyId, logOutput = true) => {
     const table = new Table({
       head: ["Policy ID", "Policy Type", "Created Date", "Last Updated Date"],
       colWidths: [24, 20, 40, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
     });
     table.push([
       response.policyId,
@@ -142,6 +146,8 @@ export const getPolicyStore = async (policyStoreId, logOutput = true) => {
     const table = new Table({
       head: ["ID", "ARN", "Created Date"],
       colWidths: [24, 80, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
     });
     table.push([response.policyStoreId, response.arn, response.createdDate]);
     if (logOutput) {
@@ -294,6 +300,8 @@ export const listPolicies = async (policyStoreId, logOutput = true) => {
       const table = new Table({
         head: ["Policy ID", "Policy Type", "Created Date", "Last Updated Date"],
         colWidths: [24, 20, 40, 40],
+        wordWrap: true,
+        wrapOnWordBoundary: false,
       });
       response.policies.forEach((policy) => {
         table.push([
@@ -366,6 +374,8 @@ const handleTemplateLinkedPoliciesScenario = async (
       "Policy Template",
     ],
     colWidths: [40, 40, 40, 40, 40, 40],
+    wordWrap: true,
+    wrapOnWordBoundary: false,
   });
 
   for (const policy of templateLinkedPolicies) {
@@ -433,6 +443,8 @@ export const useScenario = async (
         const table = new Table({
           head: ["Policy ID", "Policy Store ID", "Created Date"],
           colWidths: [40, 40, 40],
+          wordWrap: true,
+          wrapOnWordBoundary: false,
         });
 
         for (const policy of policies) {
@@ -554,9 +566,15 @@ export const IsAuthorized = async (
     console.log("Making authorization decision...");
     const response = await client.send(command);
 
-    console.log("Decision:", response.decision);
-    console.log("Determining Policies:", response.determiningPolicies);
-    console.log("Errors:", response.errors);
+    handleAuthorizationResponse(
+      response,
+      policyStoreId,
+      input.principal,
+      input.action,
+      input.resource,
+      input.context
+    );
+
     return response;
   } catch (error) {
     console.error(`Failed to make authorization decision: ${error.message}`);
@@ -589,17 +607,21 @@ export const isAuthorizedWithToken = async (
     },
   };
 
-  console.dir(input, { depth: null });
-
   const command = new IsAuthorizedWithTokenCommand(input);
 
   try {
     console.log("Making authorization decision with token...");
     const response = await client.send(command);
 
-    console.log("Decision:", response.decision);
-    console.log("Determining Policies:", response.determiningPolicies);
-    console.log("Errors:", response.errors);
+    handleAuthorizationResponse(
+      response,
+      policyStoreId,
+      input.principal,
+      input.action,
+      input.resource,
+      input.context
+    );
+
     return response;
   } catch (error) {
     console.error(`Failed to make authorization decision: ${error.message}`);
@@ -633,6 +655,8 @@ export const handleCognitoIntegrationScenario = async (
   const table = new Table({
     head: ["Policy ID", "Policy Store ID", "Created Date"],
     colWidths: [40, 40, 40],
+    wordWrap: true,
+    wrapOnWordBoundary: false,
   });
   for (const policy of policies) {
     table.push([policy.policyId, policyStoreId, policy.createdDate]);
@@ -641,4 +665,49 @@ export const handleCognitoIntegrationScenario = async (
   console.log(
     `Generating of the ${scenario.scenarioName} is finished. Open the AWS console to play around with that.`
   );
+};
+
+const handleAuthorizationResponse = (
+  response,
+  policyStoreId,
+  principal,
+  action,
+  resource,
+  context
+) => {
+  const table = new Table({
+    head: [
+      "Decision",
+      "Determining Policies",
+      "Errors",
+      "Policy Store ID",
+      "Principal",
+      "Action",
+      "Resource",
+      "Context",
+    ],
+    colWidths: [10, 30, 20, 30, 30, 30, 30, 30],
+    wordWrap: true,
+    wrapOnWordBoundary: false,
+  });
+
+  const determiningPolicies = response.determiningPolicies
+    .map((policy) => policy.policyId)
+    .join(", ");
+  const errors = response.errors
+    .map((error) => error.errorDescription)
+    .join(", ");
+
+  table.push([
+    response.decision,
+    determiningPolicies,
+    errors,
+    policyStoreId,
+    `${principal.entityType}::${principal.entityId}`,
+    `${action.actionType}::${action.actionId}`,
+    `${resource.entityType}::${resource.entityId}`,
+    JSON.stringify(context.contextMap),
+  ]);
+
+  console.log(table.toString());
 };
