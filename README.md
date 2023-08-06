@@ -62,6 +62,8 @@ Please ensure that you have set up your AWS credentials correctly to use this to
 
 The tool provides the following actions:
 
+- Make an authorization decision
+- Make an authorization decision with Cognito Identity Token
 - Use prepared scenarios
 - List all policy stores
 - Create a policy store
