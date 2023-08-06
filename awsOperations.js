@@ -521,7 +521,9 @@ export const IsAuthorized = async (
   actionEntityType,
   actionEntityId,
   resourceEntityType,
-  resourceEntityId
+  resourceEntityId,
+  contextKey = null,
+  contextValue = null
 ) => {
   const input = {
     policyStoreId,
@@ -541,6 +543,10 @@ export const IsAuthorized = async (
       contextMap: {},
     },
   };
+
+  if (contextKey && contextValue) {
+    input.context.contextMap[contextKey] = { string: contextValue };
+  }
 
   const command = new IsAuthorizedCommand(input);
 

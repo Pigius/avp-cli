@@ -238,15 +238,23 @@ export const getAnswers = () => {
             },
             {
               name: "contextKey",
-              message: "Enter the Context Key for the context purpose",
+              message:
+                "Enter the Context Key for the context purpose (If no needed leave blank)",
               type: "input",
-              when: (answers) => answers.action === "isAuthorizedWithToken",
+              default: "",
+              when: (answers) =>
+                answers.action === "isAuthorizedWithToken" ||
+                answers.action === "isAuthorized",
             },
             {
               name: "contextValue",
-              message: "Enter the Context Value for the context purpose",
+              message:
+                "Enter the Context Value for the context purpose (If no needed leave blank)",
               type: "input",
-              when: (answers) => answers.action === "isAuthorizedWithToken",
+              default: "",
+              when: (answers) =>
+                answers.action === "isAuthorizedWithToken" ||
+                answers.action === "isAuthorized",
             },
             {
               name: "userPoolArn",

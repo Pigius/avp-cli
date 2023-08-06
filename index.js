@@ -42,7 +42,9 @@ const interactiveMode = async () => {
             answers.actionEntityType,
             answers.actionEntityId,
             answers.resourceEntityType,
-            answers.resourceEntityId
+            answers.resourceEntityId,
+            answers.contextKey,
+            answers.contextValue
           );
           break;
         case "isAuthorizedWithToken":
