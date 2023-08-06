@@ -86,6 +86,10 @@ export const getAnswers = () => {
                   name: "Make an authorization decision",
                   value: "isAuthorized",
                 },
+                {
+                  name: "Make an authorization decision with Cognito Identity Token",
+                  value: "isAuthorizedWithToken",
+                },
                 { name: "List all policy stores", value: "listPolicyStores" },
                 { name: "Create a policy store", value: "createPolicyStore" },
                 { name: "Get a policy store", value: "getPolicyStore" },
@@ -114,12 +118,20 @@ export const getAnswers = () => {
               default: "STRICT",
               when: (answers) => answers.action === "createPolicyStore",
             },
+
+            {
+              name: "identityToken",
+              message: "Enter the Identity Token from Cognito",
+              type: "input",
+              when: (answers) => answers.action === "isAuthorizedWithToken",
+            },
             {
               name: "policyStoreId",
               message: "Enter the ID of the policy store",
               type: "input",
               when: (answers) =>
                 answers.action === "isAuthorized" ||
+                answers.action === "isAuthorizedWithToken" ||
                 answers.action === "getPolicyStore" ||
                 answers.action === "deletePolicyStore" ||
                 answers.action === "putSchema" ||
@@ -194,13 +206,17 @@ export const getAnswers = () => {
               name: "actionEntityType",
               message: "Enter the entity type of the action",
               type: "input",
-              when: (answers) => answers.action === "isAuthorized",
+              when: (answers) =>
+                answers.action === "isAuthorized" ||
+                answers.action === "isAuthorizedWithToken",
             },
             {
               name: "actionEntityId",
               message: "Enter the entity ID of the action",
               type: "input",
-              when: (answers) => answers.action === "isAuthorized",
+              when: (answers) =>
+                answers.action === "isAuthorized" ||
+                answers.action === "isAuthorizedWithToken",
             },
             {
               name: "resourceEntityType",
@@ -208,7 +224,8 @@ export const getAnswers = () => {
               type: "input",
               when: (answers) =>
                 answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorized",
+                answers.action === "isAuthorized" ||
+                answers.action === "isAuthorizedWithToken",
             },
             {
               name: "resourceEntityId",
@@ -216,7 +233,20 @@ export const getAnswers = () => {
               type: "input",
               when: (answers) =>
                 answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorized",
+                answers.action === "isAuthorized" ||
+                answers.action === "isAuthorizedWithToken",
+            },
+            {
+              name: "contextKey",
+              message: "Enter the Context Key for the context purpose",
+              type: "input",
+              when: (answers) => answers.action === "isAuthorizedWithToken",
+            },
+            {
+              name: "contextValue",
+              message: "Enter the Context Value for the context purpose",
+              type: "input",
+              when: (answers) => answers.action === "isAuthorizedWithToken",
             },
             {
               name: "userPoolArn",

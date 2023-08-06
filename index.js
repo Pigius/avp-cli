@@ -10,6 +10,7 @@ import {
   getPolicyStore,
   getSchema,
   IsAuthorized,
+  isAuthorizedWithToken,
   listPolicies,
   listPolicyStores,
   putSchema,
@@ -42,6 +43,18 @@ const interactiveMode = async () => {
             answers.actionEntityId,
             answers.resourceEntityType,
             answers.resourceEntityId
+          );
+          break;
+        case "isAuthorizedWithToken":
+          await isAuthorizedWithToken(
+            answers.policyStoreId,
+            answers.identityToken,
+            answers.actionEntityType,
+            answers.actionEntityId,
+            answers.resourceEntityType,
+            answers.resourceEntityId,
+            answers.contextKey,
+            answers.contextValue
           );
           break;
         case "documentsScenario":

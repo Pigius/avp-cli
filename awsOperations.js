@@ -9,6 +9,7 @@ import {
   GetPolicyStoreCommand,
   GetSchemaCommand,
   IsAuthorizedCommand,
+  IsAuthorizedWithTokenCommand,
   ListPoliciesCommand,
   ListPolicyStoresCommand,
   PutSchemaCommand,
@@ -545,6 +546,49 @@ export const IsAuthorized = async (
 
   try {
     console.log("Making authorization decision...");
+    const response = await client.send(command);
+
+    console.log("Decision:", response.decision);
+    console.log("Determining Policies:", response.determiningPolicies);
+    console.log("Errors:", response.errors);
+    return response;
+  } catch (error) {
+    console.error(`Failed to make authorization decision: ${error.message}`);
+  }
+};
+
+export const isAuthorizedWithToken = async (
+  policyStoreId,
+  identityToken,
+  actionEntityType,
+  actionEntityId,
+  resourceEntityType,
+  resourceEntityId,
+  contextKey,
+  contextValue
+) => {
+  const input = {
+    policyStoreId,
+    identityToken,
+    action: {
+      actionType: actionEntityType,
+      actionId: actionEntityId,
+    },
+    resource: {
+      entityType: resourceEntityType,
+      entityId: resourceEntityId,
+    },
+    context: {
+      contextMap: { [contextKey]: { string: contextValue } },
+    },
+  };
+
+  console.dir(input, { depth: null });
+
+  const command = new IsAuthorizedWithTokenCommand(input);
+
+  try {
+    console.log("Making authorization decision with token...");
     const response = await client.send(command);
 
     console.log("Decision:", response.decision);
