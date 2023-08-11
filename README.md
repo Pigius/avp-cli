@@ -193,8 +193,7 @@ To use a scenario, select "Use prepared scenarios" from the main menu, then sele
 | [Ecommerce with Group usage Scenario](scenarios/ecommerceGroupScenario/ecommerceGroupScenario.json)                                         | This scenario demonstrates the use of Groups in AWS Verified Permissions. It allows customers who belong to the VIP group to preorder products.                                                                                                                                                                                                    |
 | [Ecommerce with Policy Template usage Scenario](scenarios/ecommercePolicyTemplateScenario/ecommercePolicyTemplateScenario.json)             | This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products.                                                                                                                                                                                     |
 | [Ecommerce with Cognito Integration usage Scenario](scenarios/ecommerceCognitoIntegrationScenario/ecommerceCognitoIntegrationScenario.json) | This scenario demonstrates the use of Cognito integration in AWS Verified Permissions. It allows sellers to discount if they have agreed discount privilege. Refer to this [blogpost](https://dev.to/aws-builders/authorization-and-amazon-verified-permissions-a-new-way-to-manage-permissions-part-viii-integration-with-cognito-pgb) for setup. |
-
-Soon I will add more scenarios.
+| [Ecommerce with Hierarchy and ABAC Scenario](scenarios/ecommerceHierarchyAndAbacScenario/ecommerceCognitoIntegrationScenario.json) | This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.|
 
 ### Scenario Structure
 

@@ -40,6 +40,10 @@ export const getAnswers = () => {
                   name: "Ecommerce with Cognito Integration Scenario",
                   value: "ecommerceCognitoIntegrationScenario",
                 },
+                {
+                  name: "Ecommerce with Hierarchy and ABAC Scenario",
+                  value: "ecommerceHierarchyAndAbacScenario",
+                },
                 { name: "Back", value: "back" },
               ],
             },

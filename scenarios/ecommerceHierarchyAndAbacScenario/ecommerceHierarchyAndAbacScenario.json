@@ -1,0 +1,12 @@
+{
+  "validationMode": "STRICT",
+  "name": "Ecommerce with Hierarchy and ABAC Scenario",
+  "description": "This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.",
+  "schemaPath": "./scenarios/ecommerceHierarchyAndAbacScenario/schema.json",
+  "policies": [
+    {
+      "path": "./scenarios/ecommerceHierarchyAndAbacScenario/allow_policy.cedar",
+      "description": "Allows sellers to sell car if department matches the car's department"
+    }
+  ]  
+}
