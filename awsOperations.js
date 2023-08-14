@@ -21,6 +21,7 @@ import {
   PutSchemaCommand,
   UpdatePolicyCommand,
   UpdatePolicyStoreCommand,
+  UpdateIdentitySourceCommand,
   UpdatePolicyTemplateCommand,
   VerifiedPermissionsClient,
 } from "@aws-sdk/client-verifiedpermissions";
@@ -724,6 +725,39 @@ export const createIdentitySource = async (
     return response;
   } catch (error) {
     console.error(`Failed to create identity source: ${error.message}`);
+    throw error;
+  }
+};
+
+export const updateIdentitySource = async (
+  policyStoreId,
+  identitySourceId,
+  userPoolArn,
+  principalEntityType,
+  appClientId
+) => {
+  const input = {
+    policyStoreId,
+    identitySourceId,
+    principalEntityType,
+    updateConfiguration: {
+      cognitoUserPoolConfiguration: {
+        userPoolArn: userPoolArn,
+        clientIds: [appClientId],
+      },
+    },
+  };
+  const command = new UpdateIdentitySourceCommand(input);
+
+  try {
+    console.log("Updating an identity source...");
+    const response = await client.send(command);
+    console.log(
+      `Identity source updated with ID: ${response.identitySourceId}`
+    );
+    return response;
+  } catch (error) {
+    console.error(`Failed to update identity source: ${error.message}`);
   }
 };
 
@@ -825,38 +859,42 @@ export const handleCognitoIntegrationScenario = async (
   userPoolArn,
   appClientId
 ) => {
-  await createIdentitySource(
-    policyStoreId,
-    scenario.principalEntityType,
-    userPoolArn,
-    appClientId
-  );
-  const policies = [];
-
-  for (const policy of scenario.policies) {
-    const createdPolicy = await createStaticPolicy(
+  try {
+    identityResponse = await createIdentitySource(
       policyStoreId,
-      policy.path,
-      policy.description,
-      false
+      scenario.principalEntityType,
+      userPoolArn,
+      appClientId
     );
-    console.log(`Static policy created with ID: ${createdPolicy.policyId}`);
-    policies.push(createdPolicy);
+    const policies = [];
+
+    for (const policy of scenario.policies) {
+      const createdPolicy = await createStaticPolicy(
+        policyStoreId,
+        policy.path,
+        policy.description,
+        false
+      );
+      console.log(`Static policy created with ID: ${createdPolicy.policyId}`);
+      policies.push(createdPolicy);
+    }
+    const table = new Table({
+      head: ["Policy ID", "Policy Store ID", "Created Date"],
+      colWidths: [40, 40, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
+    });
+    for (const policy of policies) {
+      table.push([policy.policyId, policyStoreId, policy.createdDate]);
+    }
+    console.log(table.toString());
+    console.log(
+      `Generating of the ${scenario.scenarioName} is finished. Open the AWS console to play around with that.`
+    );
+    console.log(generateTestMessage(scenario));
+  } catch (error) {
+    console.error(`Scenario execution failed: ${error.message}`);
   }
-  const table = new Table({
-    head: ["Policy ID", "Policy Store ID", "Created Date"],
-    colWidths: [40, 40, 40],
-    wordWrap: true,
-    wrapOnWordBoundary: false,
-  });
-  for (const policy of policies) {
-    table.push([policy.policyId, policyStoreId, policy.createdDate]);
-  }
-  console.log(table.toString());
-  console.log(
-    `Generating of the ${scenario.scenarioName} is finished. Open the AWS console to play around with that.`
-  );
-  console.log(generateTestMessage(scenario));
 };
 
 const handleAuthorizationResponse = (

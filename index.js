@@ -23,6 +23,8 @@ import {
   updateStaticPolicy,
   updatePolicyStore,
   updatePolicyTemplate,
+  updateIdentitySource,
+  createIdentitySource,
   useScenario,
 } from "./awsOperations.js";
 
@@ -78,6 +80,23 @@ const interactiveMode = async () => {
             answers.policyStoreId,
             answers.policyPath,
             answers.description
+          );
+          break;
+        case "createIdentitySource":
+          await createIdentitySource(
+            answers.policyStoreId,
+            answers.principalEntityType,
+            answers.userPoolArn,
+            answers.appClientId
+          );
+          break;
+        case "updateIdentitySource":
+          await updateIdentitySource(
+            answers.policyStoreId,
+            answers.identitySourceId,
+            answers.principalEntityType,
+            answers.userPoolArn,
+            answers.appClientId
           );
           break;
         case "createTemplatePolicy":

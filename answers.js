@@ -111,6 +111,15 @@ export const getAnswers = () => {
                 { name: "Get Policy", value: "getPolicy" },
                 { name: "Get Identity Source", value: "getIdentitySource" },
                 { name: "Get Policy Template", value: "getPolicyTemplate" },
+                { name: "Get Identity Source", value: "getIdentitySource" },
+                {
+                  name: "Create Identity Source",
+                  value: "createIdentitySource",
+                },
+                {
+                  name: "Update Identity Source",
+                  value: "updateIdentitySource",
+                },
                 { name: "Get Schema", value: "getSchema" },
                 { name: "Delete a Policy", value: "deletePolicy" },
                 { name: "List Policy Templates", value: "listPolicyTemplates" },
@@ -170,7 +179,9 @@ export const getAnswers = () => {
                 answers.action === "listIdentitySources" ||
                 answers.action === "listPolicyTemplates" ||
                 answers.action === "updatePolicyStore" ||
-                answers.action === "updatePolicyTemplate",
+                answers.action === "updatePolicyTemplate" ||
+                answers.action === "createIdentitySource" ||
+                answers.action === "updateIdentitySource",
             },
             {
               name: "pathToSchema",
@@ -184,7 +195,8 @@ export const getAnswers = () => {
               type: "input",
               when: (answers) =>
                 answers.action === "deleteIdentitySource" ||
-                answers.action === "getIdentitySource",
+                answers.action === "getIdentitySource" ||
+                answers.action === "updateIdentitySource",
             },
             {
               name: "policyId",
@@ -238,7 +250,10 @@ export const getAnswers = () => {
               name: "principalEntityType",
               message: "Enter the entity type of the principal",
               type: "input",
-              when: (answers) => answers.action === "createTemplatePolicy",
+              when: (answers) =>
+                answers.action === "createTemplatePolicy" ||
+                answers.action === "createIdentitySource" ||
+                answers.action === "updateIdentitySource",
             },
             {
               name: "principalEntityId",
@@ -270,17 +285,19 @@ export const getAnswers = () => {
               name: "userPoolArn",
               message: "Enter the Amazon Cognito User Pool ARN",
               type: "input",
-              when: (scenarioAnswers) =>
-                scenarioAnswers.scenario ===
-                "ecommerceCognitoIntegrationScenario",
+              when: (answers) =>
+                answers.scenario === "ecommerceCognitoIntegrationScenario" ||
+                answers.action === "createIdentitySource" ||
+                answers.action === "updateIdentitySource",
             },
             {
               name: "appClientId",
               message: "Enter the Amazon Cognito App Client ID",
               type: "input",
-              when: (scenarioAnswers) =>
-                scenarioAnswers.scenario ===
-                "ecommerceCognitoIntegrationScenario",
+              when: (answers) =>
+                answers.scenario === "ecommerceCognitoIntegrationScenario" ||
+                answers.action === "createIdentitySource" ||
+                answers.action === "updateIdentitySource",
             },
           ])
           .then((answers) => {
