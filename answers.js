@@ -134,7 +134,6 @@ export const getAnswers = () => {
               message: "Enter the ID of the policy store",
               type: "input",
               when: (answers) =>
-                answers.action === "isAuthorized" ||
                 answers.action === "isAuthorizedWithToken" ||
                 answers.action === "getPolicyStore" ||
                 answers.action === "deletePolicyStore" ||
@@ -194,33 +193,25 @@ export const getAnswers = () => {
               name: "principalEntityType",
               message: "Enter the entity type of the principal",
               type: "input",
-              when: (answers) =>
-                answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorized",
+              when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
               name: "principalEntityId",
               message: "Enter the entity ID of the principal",
               type: "input",
-              when: (answers) =>
-                answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorized",
+              when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
               name: "actionEntityType",
               message: "Enter the entity type of the action",
               type: "input",
-              when: (answers) =>
-                answers.action === "isAuthorized" ||
-                answers.action === "isAuthorizedWithToken",
+              when: (answers) => answers.action === "isAuthorizedWithToken",
             },
             {
               name: "actionEntityId",
               message: "Enter the entity ID of the action",
               type: "input",
-              when: (answers) =>
-                answers.action === "isAuthorized" ||
-                answers.action === "isAuthorizedWithToken",
+              when: (answers) => answers.action === "isAuthorizedWithToken",
             },
             {
               name: "resourceEntityType",
@@ -228,8 +219,13 @@ export const getAnswers = () => {
               type: "input",
               when: (answers) =>
                 answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorized" ||
                 answers.action === "isAuthorizedWithToken",
+            },
+            {
+              name: "testFilePath",
+              message: "Enter the path for json test file",
+              type: "input",
+              when: (answers) => answers.action === "isAuthorized",
             },
             {
               name: "resourceEntityId",
@@ -237,7 +233,6 @@ export const getAnswers = () => {
               type: "input",
               when: (answers) =>
                 answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorized" ||
                 answers.action === "isAuthorizedWithToken",
             },
             {
@@ -246,9 +241,7 @@ export const getAnswers = () => {
                 "Enter the Context Key for the context purpose (If no needed leave blank)",
               type: "input",
               default: "",
-              when: (answers) =>
-                answers.action === "isAuthorizedWithToken" ||
-                answers.action === "isAuthorized",
+              when: (answers) => answers.action === "isAuthorizedWithToken",
             },
             {
               name: "contextValue",
@@ -256,9 +249,7 @@ export const getAnswers = () => {
                 "Enter the Context Value for the context purpose (If no needed leave blank)",
               type: "input",
               default: "",
-              when: (answers) =>
-                answers.action === "isAuthorizedWithToken" ||
-                answers.action === "isAuthorized",
+              when: (answers) => answers.action === "isAuthorizedWithToken",
             },
             {
               name: "userPoolArn",

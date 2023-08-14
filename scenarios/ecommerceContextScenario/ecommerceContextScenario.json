@@ -8,5 +8,22 @@
       "path": "./scenarios/ecommerceContextScenario/allow_policy.cedar",
       "description": "Allow viewing of products for customers in the US region"
     }
-  ]  
+  ],
+    "tests": [
+    {
+     "path": "./scenarios/ecommerceContextScenario/allow_test_1.json",
+      "description": "User Bob is allowed the ability to view (action) the basketball (resource), with region us",
+      "type": "allow"
+    },
+        {
+     "path": "./scenarios/ecommerceContextScenario/deny_test_1.json",
+      "description": "User Bob is denied the ability to view (action) the basketball (resource), with region eu",
+      "type": "forbid"
+    },
+    {
+     "path": "./scenarios/ecommerceContextScenario/deny_test_2.json",
+      "description": "User Bob is denied the ability to view (action) the basketball (resource), with no region specified",
+      "type": "forbid"
+    }
+  ]
 }

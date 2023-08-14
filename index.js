@@ -35,17 +35,7 @@ const interactiveMode = async () => {
 
       switch (answers.action) {
         case "isAuthorized":
-          await IsAuthorized(
-            answers.policyStoreId,
-            answers.principalEntityType,
-            answers.principalEntityId,
-            answers.actionEntityType,
-            answers.actionEntityId,
-            answers.resourceEntityType,
-            answers.resourceEntityId,
-            answers.contextKey,
-            answers.contextValue
-          );
+          await IsAuthorized(answers.testFilePath);
           break;
         case "isAuthorizedWithToken":
           await isAuthorizedWithToken(

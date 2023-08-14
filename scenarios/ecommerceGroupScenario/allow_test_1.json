@@ -1,0 +1,43 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "principal": {
+        "entityType": "EcommercePlatform::Customer",
+        "entityId": "Bob"
+    },
+    "action": {
+        "actionType": "EcommercePlatform::Action",
+        "actionId": "Preorder"
+    },
+    "resource": {
+        "entityType": "EcommercePlatform::Product",
+        "entityId": "basketball"
+    },
+    "entities": {
+        "entityList": [
+            {
+                "identifier": {
+                    "entityType": "EcommercePlatform::Customer",
+                    "entityId": "Bob"
+                },
+                "attributes": {},
+                "parents": [
+                    {
+                        "entityType": "EcommercePlatform::CustomerGroup",
+                        "entityId": "VIP"
+                    }
+                ]
+            },
+            {
+                "identifier": {
+                    "entityType": "EcommercePlatform::Product",
+                    "entityId": "basketball"
+                },
+                "attributes": {},
+                "parents": []
+            }
+        ]
+    },
+    "context": {
+        "contextMap": {}
+    }
+}

@@ -526,38 +526,14 @@ export const createIdentitySource = async (
   }
 };
 
-export const IsAuthorized = async (
-  policyStoreId,
-  principalEntityType,
-  principalEntityId,
-  actionEntityType,
-  actionEntityId,
-  resourceEntityType,
-  resourceEntityId,
-  contextKey = null,
-  contextValue = null
-) => {
-  const input = {
-    policyStoreId,
-    principal: {
-      entityType: principalEntityType,
-      entityId: principalEntityId,
-    },
-    action: {
-      actionType: actionEntityType,
-      actionId: actionEntityId,
-    },
-    resource: {
-      entityType: resourceEntityType,
-      entityId: resourceEntityId,
-    },
-    context: {
-      contextMap: {},
-    },
-  };
-
-  if (contextKey && contextValue) {
-    input.context.contextMap[contextKey] = { string: contextValue };
+export const IsAuthorized = async (testFilePath) => {
+  const fileContent = fs.readFileSync(testFilePath, "utf8");
+  const input = JSON.parse(fileContent);
+  if (input.policyStoreId === "your-policy-store-id") {
+    console.error(
+      "Please set the 'policyStoreId' in your JSON file before proceeding."
+    );
+    return;
   }
 
   const command = new IsAuthorizedCommand(input);
@@ -568,7 +544,7 @@ export const IsAuthorized = async (
 
     handleAuthorizationResponse(
       response,
-      policyStoreId,
+      input.policyStoreId,
       input.principal,
       input.action,
       input.resource,

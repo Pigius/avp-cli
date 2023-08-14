@@ -8,5 +8,17 @@
       "path": "./scenarios/ecommerceGroupScenario/allow_policy.cedar",
       "description": "Allow preordering of products for customers belonging to the VIP group"
     }
-  ]  
+  ],
+    "tests": [
+    {
+     "path": "./scenarios/ecommerceGroupScenario/allow_test_1.json",
+      "description": "User Bob is allowed the ability to preorder (action) the basketball (resource) as he is a member of the VIP group",
+      "type": "allow"
+    },
+        {
+     "path": "./scenarios/ecommerceGroupScenario/deny_test_1.json",
+      "description": "User Bob is denied the ability to preorder (action) the basketball (resource) as he is not member of the VIP group",
+      "type": "forbid"
+    }
+  ]
 }
