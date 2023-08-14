@@ -12,5 +12,22 @@
       "path": "./scenarios/documentsScenario/deny_policy.cedar",
       "description": "Forbid user X from viewing any documents"
     }
-  ]  
+  ],
+  "tests": [
+    {
+     "path": "./scenarios/documentsScenario/allow_test_1.json",
+      "description": "User Daniel is allowed the ability to view (action) the Payslip (resource)",
+      "type": "allow"
+    },
+        {
+     "path": "./scenarios/documentsScenario/deny_test_1.json",
+      "description": "User xyz is denied the ability to view (action) the Payslip (resource)",
+      "type": "forbid"
+    },
+    {
+     "path": "./scenarios/documentsScenario/deny_test_2.json",
+      "description": "User Daniel is denied the ability to edit (action) the Payslip (resource)",
+      "type": "forbid"
+    }
+  ]
 }

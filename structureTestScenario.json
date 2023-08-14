@@ -1,0 +1,23 @@
+{
+    "policyStoreId": "unique_policy_store_id",
+    "principal": {
+        "entityType": "Entity::Type",
+        "entityId": "entity_id"
+    },
+    "action": {
+        "actionType": "Action::Type",
+        "actionId": "action_id"
+    },
+    "resource": {
+        "entityType": "Resource::Type",
+        "entityId": "resource_id"
+    },
+    "entities": {
+        "entityList": [
+            // List of entities involved in the scenario
+        ]
+    },
+    "context": {
+        "contextMap": {}
+    }
+}

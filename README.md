@@ -193,7 +193,7 @@ To use a scenario, select "Use prepared scenarios" from the main menu, then sele
 | [Ecommerce with Group usage Scenario](scenarios/ecommerceGroupScenario/ecommerceGroupScenario.json)                                         | This scenario demonstrates the use of Groups in AWS Verified Permissions. It allows customers who belong to the VIP group to preorder products.                                                                                                                                                                                                    |
 | [Ecommerce with Policy Template usage Scenario](scenarios/ecommercePolicyTemplateScenario/ecommercePolicyTemplateScenario.json)             | This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products.                                                                                                                                                                                     |
 | [Ecommerce with Cognito Integration usage Scenario](scenarios/ecommerceCognitoIntegrationScenario/ecommerceCognitoIntegrationScenario.json) | This scenario demonstrates the use of Cognito integration in AWS Verified Permissions. It allows sellers to discount if they have agreed discount privilege. Refer to this [blogpost](https://dev.to/aws-builders/authorization-and-amazon-verified-permissions-a-new-way-to-manage-permissions-part-viii-integration-with-cognito-pgb) for setup. |
-| [Ecommerce with Hierarchy and ABAC Scenario](scenarios/ecommerceHierarchyAndAbacScenario/ecommerceCognitoIntegrationScenario.json) | This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.|
+| [Ecommerce with Hierarchy and ABAC Scenario](scenarios/ecommerceHierarchyAndAbacScenario/ecommerceCognitoIntegrationScenario.json)          | This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.                                                                                                                                                                    |
 
 ### Scenario Structure
 
@@ -215,6 +215,38 @@ A scenario is defined in a JSON file with the following structure:
   ]
 }
 ```
+
+### Testing Scenarios
+
+I've added tests for allow and deny the access for each and every scenario. Here's a brief overview:
+
+```json
+{
+  "policyStoreId": "unique_policy_store_id",
+  "principal": {
+    "entityType": "Entity::Type",
+    "entityId": "entity_id"
+  },
+  "action": {
+    "actionType": "Action::Type",
+    "actionId": "action_id"
+  },
+  "resource": {
+    "entityType": "Resource::Type",
+    "entityId": "resource_id"
+  },
+  "entities": {
+    "entityList": [
+      // List of entities involved in the scenario
+    ]
+  },
+  "context": {
+    "contextMap": {}
+  }
+}
+```
+
+For a detailed example of this structure, please refer to the `structureTestScenario.json` file located in the root directory.
 
 ### Example:
 

@@ -1,0 +1,18 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "principal": {
+        "entityType": "DocumentManagementPlatform::User",
+        "entityId": "Daniel"
+    },
+    "action": {
+        "actionType": "DocumentManagementPlatform::Action",
+        "actionId": "View"
+    },
+    "resource": {
+        "entityType": "DocumentManagementPlatform::Document",
+        "entityId": "Payslip"
+    },
+    "context": {
+        "contextMap": {}
+    }
+}
