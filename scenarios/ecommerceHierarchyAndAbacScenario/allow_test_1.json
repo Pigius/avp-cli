@@ -1,0 +1,70 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "principal": {
+        "entityType": "EcommercePlatform::Seller",
+        "entityId": "1"
+    },
+    "action": {
+        "actionType": "EcommercePlatform::Action",
+        "actionId": "Sell"
+    },
+    "resource": {
+        "entityType": "EcommercePlatform::Car",
+        "entityId": "porsche"
+    },
+    "entities": {
+        "entityList": [
+            {
+                "identifier": {
+                    "entityType": "EcommercePlatform::Seller",
+                    "entityId": "1"
+                },
+                "attributes": {
+                    "department": {
+                        "entityIdentifier": {
+                            "entityType": "EcommercePlatform::Department",
+                            "entityId": "1"
+                        }
+                    },
+                    "rating": {
+                        "long": 8
+                    }
+                },
+                "parents": []
+            },
+            {
+                "identifier": {
+                    "entityType": "EcommercePlatform::Car",
+                    "entityId": "porsche"
+                },
+                "attributes": {
+                    "price": {
+                        "long": 10000000
+                    },
+                    "department": {
+                        "entityIdentifier": {
+                            "entityType": "EcommercePlatform::Department",
+                            "entityId": "1"
+                        }
+                    }
+                },
+                "parents": []
+            },
+            {
+                "identifier": {
+                    "entityType": "EcommercePlatform::Department",
+                    "entityId": "1"
+                },
+                "attributes": {
+                    "name": {
+                        "string": "luxury"
+                    }
+                },
+                "parents": []
+            }
+        ]
+    },
+    "context": {
+        "contextMap": {}
+    }
+}

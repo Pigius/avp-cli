@@ -8,5 +8,18 @@
       "path": "./scenarios/ecommerceHierarchyAndAbacScenario/allow_policy.cedar",
       "description": "Allows sellers to sell car if department matches the car's department"
     }
-  ]  
+  ],
+  "tests": [
+    {
+     "path": "./scenarios/ecommerceHierarchyAndAbacScenario/allow_test_1.json",
+      "description": "User 1 is allowed the ability to sell (action) porsche car (resource).",
+      "type": "allow"
+    },
+        {
+     "path": "./scenarios/ecommerceHierarchyAndAbacScenario/deny_test_1.json",
+      "description": "User 1 is denied the ability to sell (action) porsche car (resource), due to not matching departments.",
+      "type": "forbid"
+    }
+  ]
 }
+
