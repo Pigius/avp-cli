@@ -455,6 +455,7 @@ export const useScenario = async (
       console.log(
         `Generating of the ${scenarioName} is finished. Open the AWS console to play around with that.`
       );
+      console.log(generateTestMessage(scenario));
     }
   } else {
     console.error(`Scenario ${scenarioName} not found`);
@@ -572,14 +573,13 @@ export const isAuthorizedWithToken = async (testFilePath) => {
     );
     return;
   }
-  console.log(JSON.stringify(input, null, 2));
 
   const command = new IsAuthorizedWithTokenCommand(input);
 
   try {
     console.log("Making authorization decision with token...");
     const response = await client.send(command);
-    console.log("response", response);
+
     handleAuthorizationResponse(
       response,
       input.policyStoreId,
@@ -632,6 +632,7 @@ export const handleCognitoIntegrationScenario = async (
   console.log(
     `Generating of the ${scenario.scenarioName} is finished. Open the AWS console to play around with that.`
   );
+  console.log(generateTestMessage(scenario));
 };
 
 const handleAuthorizationResponse = (
@@ -677,4 +678,16 @@ const handleAuthorizationResponse = (
   ]);
 
   console.log(table.toString());
+};
+
+const generateTestMessage = (scenario) => {
+  let message = "\nConsider testing it with our prepared test scenarios:\n";
+  message +=
+    " Use below path as argument to `IsAuthorized` from the manual approach option of the CLI:\n";
+
+  for (const test of scenario.tests) {
+    message += `- ${test.path} (${test.description}) ${test.type}\n`;
+  }
+
+  return message;
 };
