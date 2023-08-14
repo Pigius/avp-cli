@@ -5,7 +5,11 @@ import {
   createPolicyTemplate,
   createTemplatePolicy,
   deletePolicy,
+  deletePolicyTemplate,
+  getIdentitySource,
+  getPolicyTemplate,
   deletePolicyStore,
+  deleteIdentitySource,
   getPolicy,
   getPolicyStore,
   getSchema,
@@ -13,8 +17,12 @@ import {
   isAuthorizedWithToken,
   listPolicies,
   listPolicyStores,
+  listPolicyTemplates,
+  listIdentitySources,
   putSchema,
   updateStaticPolicy,
+  updatePolicyStore,
+  updatePolicyTemplate,
   useScenario,
 } from "./awsOperations.js";
 
@@ -98,14 +106,46 @@ const interactiveMode = async () => {
         case "deletePolicy":
           await deletePolicy(answers.policyStoreId, answers.policyId);
           break;
+        case "deletePolicyTemplate":
+          await deletePolicyTemplate(
+            answers.policyStoreId,
+            answers.policyTemplateId
+          );
+          break;
         case "deletePolicyStore":
           await deletePolicyStore(answers.policyStoreId);
+          break;
+        case "deleteIdentitySource":
+          await deleteIdentitySource(
+            answers.policyStoreId,
+            answers.identitySourceId
+          );
+          break;
+        case "updatePolicyTemplate":
+          await updatePolicyTemplate(
+            answers.policyStoreId,
+            answers.policyTemplateId,
+            answers.statement,
+            answers.description
+          );
           break;
         case "getPolicy":
           await getPolicy(answers.policyStoreId, answers.policyId);
           break;
+        case "getIdentitySource":
+          await getIdentitySource(
+            answers.policyStoreId,
+            answers.identitySourceId
+          );
+          break;
         case "getPolicyStore":
           await getPolicyStore(answers.policyStoreId);
+          break;
+        case "getPolicyTemplate":
+          await getPolicyTemplate(
+            answers.policyStoreId,
+            answers.policyTemplateId
+          );
           break;
         case "getSchema":
           await getSchema(answers.policyStoreId);
@@ -116,8 +156,20 @@ const interactiveMode = async () => {
         case "listPolicyStores":
           await listPolicyStores();
           break;
+        case "listIdentitySources":
+          await listIdentitySources(answers.policyStoreId);
+          break;
+        case "listPolicyTemplates":
+          await listPolicyTemplates(answers.policyStoreId);
+          break;
         case "putSchema":
           await putSchema(answers.policyStoreId, answers.pathToSchema);
+          break;
+        case "updatePolicyStore":
+          await updatePolicyStore(
+            answers.policyStoreId,
+            answers.validationMode
+          );
           break;
         case "updateStaticPolicy":
           await updateStaticPolicy(

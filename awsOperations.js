@@ -1,19 +1,27 @@
 import {
   CreateIdentitySourceCommand,
+  DeleteIdentitySourceCommand,
   CreatePolicyCommand,
   CreatePolicyStoreCommand,
   CreatePolicyTemplateCommand,
   DeletePolicyCommand,
   DeletePolicyStoreCommand,
+  DeletePolicyTemplateCommand,
   GetPolicyCommand,
   GetPolicyStoreCommand,
+  GetPolicyTemplateCommand,
+  GetIdentitySourceCommand,
   GetSchemaCommand,
   IsAuthorizedCommand,
   IsAuthorizedWithTokenCommand,
   ListPoliciesCommand,
   ListPolicyStoresCommand,
+  ListIdentitySourcesCommand,
+  ListPolicyTemplatesCommand,
   PutSchemaCommand,
   UpdatePolicyCommand,
+  UpdatePolicyStoreCommand,
+  UpdatePolicyTemplateCommand,
   VerifiedPermissionsClient,
 } from "@aws-sdk/client-verifiedpermissions";
 import fs from "fs";
@@ -41,6 +49,33 @@ export const listPolicyStores = async (logOutput = true) => {
     return response.policyStores;
   } catch (error) {
     console.error(`Failed to list policy stores: ${error.message}`);
+  }
+};
+
+export const listIdentitySources = async (policyStoreId, logOutput = true) => {
+  const command = new ListIdentitySourcesCommand({ policyStoreId });
+  try {
+    const response = await client.send(command);
+    const table = new Table({
+      head: ["ID", "principalEntityType", "details", "Created Date"],
+      colWidths: [24, 80, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
+    });
+    response.identitySources.forEach((source) => {
+      table.push([
+        source.identitySourceId,
+        source.principalEntityType,
+        source.details,
+        source.createdDate,
+      ]);
+    });
+    if (logOutput) {
+      console.log(table.toString());
+    }
+    return response.identitySources;
+  } catch (error) {
+    console.error(`Failed to list identity sources: ${error.message}`);
   }
 };
 
@@ -82,6 +117,36 @@ export const getPolicy = async (policyStoreId, policyId, logOutput = true) => {
     return response;
   } catch (error) {
     console.error(`Failed to get policy: ${error.message}`);
+  }
+};
+
+export const getPolicyTemplate = async (
+  policyStoreId,
+  policyTemplateId,
+  logOutput = true
+) => {
+  const input = { policyStoreId, policyTemplateId };
+  const command = new GetPolicyTemplateCommand(input);
+  try {
+    const response = await client.send(command);
+    const table = new Table({
+      head: ["Policy ID", "statement", "Created Date", "Last Updated Date"],
+      colWidths: [24, 20, 40, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
+    });
+    table.push([
+      response.policyTemplateId,
+      response.statement,
+      response.createdDate,
+      response.lastUpdatedDate,
+    ]);
+    if (logOutput) {
+      console.log(table.toString());
+    }
+    return response;
+  } catch (error) {
+    console.error(`Failed to get policy template: ${error.message}`);
   }
 };
 
@@ -137,6 +202,56 @@ export const createPolicyStore = async (validationMode, logOutput = true) => {
   }
 };
 
+export const updatePolicyStore = async (
+  policyStoreId,
+  validationMode,
+  logOutput = true
+) => {
+  const input = {
+    policyStoreId,
+    validationSettings: {
+      mode: validationMode,
+    },
+  };
+  const createCommand = new UpdatePolicyStoreCommand(input);
+  try {
+    const response = await client.send(createCommand);
+    if (logOutput) {
+      console.log(`Policy store updated with ID: ${response.policyStoreId}`);
+    }
+    return response.policyStoreId;
+  } catch (error) {
+    console.error(`Failed to update policy store: ${error.message}`);
+  }
+};
+
+export const updatePolicyTemplate = async (
+  policyStoreId,
+  policyTemplateId,
+  statement,
+  description,
+  logOutput = true
+) => {
+  const input = {
+    policyStoreId,
+    policyTemplateId,
+    statement,
+    description,
+  };
+  const updateCommand = new UpdatePolicyTemplateCommand(input);
+  try {
+    const response = await client.send(updateCommand);
+    if (logOutput) {
+      console.log(
+        `Policy template updated with ID: ${response.policyTemplateId}`
+      );
+    }
+    return response.policyTemplateId;
+  } catch (error) {
+    console.error(`Failed to update policy template: ${error.message}`);
+  }
+};
+
 export const getPolicyStore = async (policyStoreId, logOutput = true) => {
   const input = { policyStoreId };
   const command = new GetPolicyStoreCommand(input);
@@ -159,6 +274,36 @@ export const getPolicyStore = async (policyStoreId, logOutput = true) => {
   }
 };
 
+export const getIdentitySource = async (
+  policyStoreId,
+  identitySourceId,
+  logOutput = true
+) => {
+  const input = { policyStoreId, identitySourceId };
+  const command = new GetIdentitySourceCommand(input);
+  try {
+    const response = await client.send(command);
+
+    const table = new Table({
+      head: ["Policy Store", "identitySourceId", "Created Date"],
+      colWidths: [24, 80, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
+    });
+    table.push([
+      response.policyStoreId,
+      response.identitySourceId,
+      response.createdDate,
+    ]);
+    if (logOutput) {
+      console.log(table.toString());
+    }
+    return response;
+  } catch (error) {
+    console.error(`Failed to get identity source: ${error.message}`);
+  }
+};
+
 export const deletePolicyStore = async (policyStoreId, logOutput = true) => {
   const input = { policyStoreId };
 
@@ -173,7 +318,7 @@ export const deletePolicyStore = async (policyStoreId, logOutput = true) => {
       console.log(`Policy store deleted with ID: ${policyStoreId}`);
     }
   } catch (error) {
-    console.error(`Failed to get policy store: ${error.message}`);
+    console.error(`Failed to delete policy store: ${error.message}`);
   }
 };
 
@@ -291,6 +436,28 @@ export const deletePolicy = async (
   }
 };
 
+export const deletePolicyTemplate = async (
+  policyStoreId,
+  policyTemplateId,
+  logOutput = true
+) => {
+  const input = { policyStoreId, policyTemplateId };
+  const command = new DeletePolicyTemplateCommand(input);
+  try {
+    if (logOutput) {
+      console.log("Deleting a policy template...");
+    }
+    await client.send(command);
+    if (logOutput) {
+      console.log(
+        `Policy template deleted with ID: ${policyTemplateId} from policy store id ${policyStoreId}`
+      );
+    }
+  } catch (error) {
+    console.error(`Failed to delete policy template: ${error.message}`);
+  }
+};
+
 export const listPolicies = async (policyStoreId, logOutput = true) => {
   const input = { policyStoreId };
   const command = new ListPoliciesCommand(input);
@@ -316,6 +483,39 @@ export const listPolicies = async (policyStoreId, logOutput = true) => {
     return response.policies;
   } catch (error) {
     console.error(`Failed to list policies: ${error.message}`);
+  }
+};
+
+export const listPolicyTemplates = async (policyStoreId, logOutput = true) => {
+  const input = { policyStoreId };
+  const command = new ListPolicyTemplatesCommand(input);
+  try {
+    const response = await client.send(command);
+    if (logOutput) {
+      const table = new Table({
+        head: [
+          "Policy Template ID",
+          "Description",
+          "Created Date",
+          "Last Updated Date",
+        ],
+        colWidths: [24, 20, 40, 40],
+        wordWrap: true,
+        wrapOnWordBoundary: false,
+      });
+      response.policyTemplates.forEach((policyTemplate) => {
+        table.push([
+          policyTemplate.policyTemplateId,
+          policyTemplate.description,
+          policyTemplate.createdDate,
+          policyTemplate.lastUpdatedDate,
+        ]);
+      });
+      console.log(table.toString());
+    }
+    return response.policyTemplates;
+  } catch (error) {
+    console.error(`Failed to list policy templates: ${error.message}`);
   }
 };
 
@@ -524,6 +724,30 @@ export const createIdentitySource = async (
     return response;
   } catch (error) {
     console.error(`Failed to create identity source: ${error.message}`);
+  }
+};
+
+export const deleteIdentitySource = async (
+  policyStoreId,
+  identitySourceId,
+  logOutput = true
+) => {
+  const input = { policyStoreId, identitySourceId };
+
+  const command = new DeleteIdentitySourceCommand(input);
+
+  try {
+    if (logOutput) {
+      console.log("Deleting a identity source...");
+    }
+    await client.send(command);
+    if (logOutput) {
+      console.log(
+        `Identity source deleted with ID: ${identitySourceId} from policy store id ${policyStoreId}`
+      );
+    }
+  } catch (error) {
+    console.error(`Failed to delete identity source: ${error.message}`);
   }
 };
 

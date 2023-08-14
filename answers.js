@@ -95,6 +95,11 @@ export const getAnswers = () => {
                   value: "isAuthorizedWithToken",
                 },
                 { name: "List all policy stores", value: "listPolicyStores" },
+                {
+                  name: "List identity sources",
+                  value: "listIdentitySources",
+                },
+
                 { name: "Create a policy store", value: "createPolicyStore" },
                 { name: "Get a policy store", value: "getPolicyStore" },
                 { name: "Delete a policy store", value: "deletePolicyStore" },
@@ -104,8 +109,26 @@ export const getAnswers = () => {
                 { name: "Add policy template", value: "createPolicyTemplate" },
                 { name: "Update Static Policy", value: "updateStaticPolicy" },
                 { name: "Get Policy", value: "getPolicy" },
+                { name: "Get Identity Source", value: "getIdentitySource" },
+                { name: "Get Policy Template", value: "getPolicyTemplate" },
                 { name: "Get Schema", value: "getSchema" },
                 { name: "Delete a Policy", value: "deletePolicy" },
+                { name: "List Policy Templates", value: "listPolicyTemplates" },
+                { name: "Update Policy Store", value: "updatePolicyStore" },
+                {
+                  name: "Update Policy Template",
+                  value: "updatePolicyTemplate",
+                },
+                {
+                  name: "Delete a Policy Template",
+                  value: "deletePolicyTemplate",
+                },
+
+                {
+                  name: "Delete a Identity Source",
+                  value: "deleteIdentitySource",
+                },
+
                 {
                   name: "List all Policies in a Policy Store",
                   value: "listPolicies",
@@ -120,7 +143,9 @@ export const getAnswers = () => {
               type: "list",
               choices: ["OFF", "STRICT"],
               default: "STRICT",
-              when: (answers) => answers.action === "createPolicyStore",
+              when: (answers) =>
+                answers.action === "createPolicyStore" ||
+                answers.action === "updatePolicyStore",
             },
             {
               name: "policyStoreId",
@@ -137,13 +162,29 @@ export const getAnswers = () => {
                 answers.action === "deletePolicy" ||
                 answers.action === "listPolicies" ||
                 answers.action === "createTemplatePolicy" ||
-                answers.action === "createPolicyTemplate",
+                answers.action === "createPolicyTemplate" ||
+                answers.action === "deleteIdentitySource" ||
+                answers.action === "deletePolicyTemplate" ||
+                answers.action === "getIdentitySource" ||
+                answers.action === "getPolicyTemplate" ||
+                answers.action === "listIdentitySources" ||
+                answers.action === "listPolicyTemplates" ||
+                answers.action === "updatePolicyStore" ||
+                answers.action === "updatePolicyTemplate",
             },
             {
               name: "pathToSchema",
               message: "Enter a path to schema",
               type: "input",
               when: (answers) => answers.action === "putSchema",
+            },
+            {
+              name: "identitySourceId",
+              message: "Enter identitySourceId",
+              type: "input",
+              when: (answers) =>
+                answers.action === "deleteIdentitySource" ||
+                answers.action === "getIdentitySource",
             },
             {
               name: "policyId",
@@ -173,13 +214,25 @@ export const getAnswers = () => {
               name: "description",
               message: "Enter the description for the policy template",
               type: "input",
-              when: (answers) => answers.action === "createPolicyTemplate",
+              when: (answers) =>
+                answers.action === "createPolicyTemplate" ||
+                answers.action === "updatePolicyTemplate",
+            },
+            {
+              name: "statement",
+              message: "Enter statement of the policy ",
+              type: "input",
+              when: (answers) => answers.action === "updatePolicyTemplate",
             },
             {
               name: "policyTemplateId",
               message: "Enter the ID for the policy template",
               type: "input",
-              when: (answers) => answers.action === "createTemplatePolicy",
+              when: (answers) =>
+                answers.action === "createTemplatePolicy" ||
+                answers.action === "deletePolicyTemplate" ||
+                answers.action === "getPolicyTemplate" ||
+                answers.action === "updatePolicyTemplate",
             },
             {
               name: "principalEntityType",
