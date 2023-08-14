@@ -246,7 +246,7 @@ I've added tests for allow and deny the access for each and every scenario. Here
 }
 ```
 
-For a detailed example of this structure, please refer to the `structureTestScenario.json` file located in the root directory.
+For a detailed example of this structure, please refer to the `structureAuthorizationRequest.json` file located in the root directory.
 
 ### Example:
 

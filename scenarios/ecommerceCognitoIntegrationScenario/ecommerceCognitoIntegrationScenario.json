@@ -9,5 +9,17 @@
       "path": "./scenarios/ecommerceCognitoIntegrationScenario/allow_policy.cedar",
       "description": "Allow sellers to discount if they have the agreed discount privilege."
     }
+  ],
+  "tests": [
+    {
+     "path": "./scenarios/ecommerceCognitoIntegrationScenario/allow_test_1.json",
+      "description": "Cognito User is allowed the ability to discount (action) the product (resource), with custom.discountPrivilege claim setup as agreed in IdentityToken",
+      "type": "allow"
+    },
+        {
+     "path": "./scenarios/ecommerceCognitoIntegrationScenario/deny_test_1.json",
+      "description": "Cognito User is denied the ability to discount (action) the product (resource), with custom.discountPrivilege claim setup as rejected in IdentityToken",
+      "type": "forbid"
+    }
   ]
 }

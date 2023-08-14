@@ -557,41 +557,32 @@ export const IsAuthorized = async (testFilePath) => {
   }
 };
 
-export const isAuthorizedWithToken = async (
-  policyStoreId,
-  identityToken,
-  actionEntityType,
-  actionEntityId,
-  resourceEntityType,
-  resourceEntityId,
-  contextKey,
-  contextValue
-) => {
-  const input = {
-    policyStoreId,
-    identityToken,
-    action: {
-      actionType: actionEntityType,
-      actionId: actionEntityId,
-    },
-    resource: {
-      entityType: resourceEntityType,
-      entityId: resourceEntityId,
-    },
-    context: {
-      contextMap: { [contextKey]: { string: contextValue } },
-    },
-  };
+export const isAuthorizedWithToken = async (testFilePath) => {
+  const fileContent = fs.readFileSync(testFilePath, "utf8");
+  const input = JSON.parse(fileContent);
+  if (input.policyStoreId === "your-policy-store-id") {
+    console.error(
+      "Please set the 'policyStoreId' in your JSON file before proceeding."
+    );
+    return;
+  }
+  if (input.identityToken === "your-identity-token") {
+    console.error(
+      "Please set the 'your-identity-token' in your JSON file before proceeding."
+    );
+    return;
+  }
+  console.log(JSON.stringify(input, null, 2));
 
   const command = new IsAuthorizedWithTokenCommand(input);
 
   try {
     console.log("Making authorization decision with token...");
     const response = await client.send(command);
-
+    console.log("response", response);
     handleAuthorizationResponse(
       response,
-      policyStoreId,
+      input.policyStoreId,
       input.principal,
       input.action,
       input.resource,

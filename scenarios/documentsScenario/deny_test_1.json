@@ -1,5 +1,5 @@
 {
-    "policyStoreId": "your-policy-id",
+    "policyStoreId": "your-policy-store-id",
     "principal": {
         "entityType": "DocumentManagementPlatform::User",
         "entityId": "xyz"

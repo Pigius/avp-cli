@@ -1,9 +1,6 @@
 {
     "policyStoreId": "unique_policy_store_id",
-    "principal": {
-        "entityType": "Entity::Type",
-        "entityId": "entity_id"
-    },
+    "identityToken": "IDENTITY_TOKEN_HERE",
     "action": {
         "actionType": "Action::Type",
         "actionId": "action_id"
@@ -13,11 +10,11 @@
         "entityId": "resource_id"
     },
     "entities": {
-        "entityList": [
-            // List of entities involved in the scenario
-        ]
+        "entityList": []
     },
     "context": {
-        "contextMap": {}
+        "contextMap": {
+            "your_context_key_here": { "string": "your_context_value_here" }
+        }
     }
 }

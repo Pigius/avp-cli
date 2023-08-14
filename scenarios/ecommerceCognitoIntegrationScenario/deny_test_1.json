@@ -1,0 +1,19 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "identityToken": "your-identity-token",
+    "action": {
+        "actionType": "MyEcommerceApp::Action",
+        "actionId": "Discount"
+    },
+    "resource": {
+        "entityType": "MyEcommerceApp::Resource",
+        "entityId": "Product"
+    },
+    "context": {
+        "contextMap": {
+            "custom.discountPrivilege": {
+                "string": "rejected"
+            }
+        }
+    }
+}

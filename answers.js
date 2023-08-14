@@ -122,19 +122,11 @@ export const getAnswers = () => {
               default: "STRICT",
               when: (answers) => answers.action === "createPolicyStore",
             },
-
-            {
-              name: "identityToken",
-              message: "Enter the Identity Token from Cognito",
-              type: "input",
-              when: (answers) => answers.action === "isAuthorizedWithToken",
-            },
             {
               name: "policyStoreId",
               message: "Enter the ID of the policy store",
               type: "input",
               when: (answers) =>
-                answers.action === "isAuthorizedWithToken" ||
                 answers.action === "getPolicyStore" ||
                 answers.action === "deletePolicyStore" ||
                 answers.action === "putSchema" ||
@@ -202,54 +194,24 @@ export const getAnswers = () => {
               when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
-              name: "actionEntityType",
-              message: "Enter the entity type of the action",
-              type: "input",
-              when: (answers) => answers.action === "isAuthorizedWithToken",
-            },
-            {
-              name: "actionEntityId",
-              message: "Enter the entity ID of the action",
-              type: "input",
-              when: (answers) => answers.action === "isAuthorizedWithToken",
-            },
-            {
               name: "resourceEntityType",
               message: "Enter the entity type of the resource",
               type: "input",
-              when: (answers) =>
-                answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorizedWithToken",
+              when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
               name: "testFilePath",
               message: "Enter the path for json test file",
               type: "input",
-              when: (answers) => answers.action === "isAuthorized",
+              when: (answers) =>
+                answers.action === "isAuthorized" ||
+                answers.action === "isAuthorizedWithToken",
             },
             {
               name: "resourceEntityId",
               message: "Enter the entity ID of the resource",
               type: "input",
-              when: (answers) =>
-                answers.action === "createTemplatePolicy" ||
-                answers.action === "isAuthorizedWithToken",
-            },
-            {
-              name: "contextKey",
-              message:
-                "Enter the Context Key for the context purpose (If no needed leave blank)",
-              type: "input",
-              default: "",
-              when: (answers) => answers.action === "isAuthorizedWithToken",
-            },
-            {
-              name: "contextValue",
-              message:
-                "Enter the Context Value for the context purpose (If no needed leave blank)",
-              type: "input",
-              default: "",
-              when: (answers) => answers.action === "isAuthorizedWithToken",
+              when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
               name: "userPoolArn",
