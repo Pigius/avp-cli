@@ -1,0 +1,18 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "principal": {
+        "entityType": "EcommercePlatform::Seller",
+        "entityId": "123"
+    },
+    "action": {
+        "actionType": "EcommercePlatform::Action",
+        "actionId": "List"
+    },
+    "resource": {
+        "entityType": "EcommercePlatform::Product",
+        "entityId": "456"
+    },
+    "context": {
+        "contextMap": {}
+    }
+}

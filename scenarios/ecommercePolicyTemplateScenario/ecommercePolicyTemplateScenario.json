@@ -21,5 +21,17 @@
       },
       "description": "Template-linked policy that allows seller 123 to list product 456"
     }
+  ],
+  "tests": [
+    {
+     "path": "./scenarios/ecommercePolicyTemplateScenario/allow_test_1.json",
+      "description": "User 123 is allowed the ability to list (action) product 456 (resource)",
+      "type": "allow"
+    },
+        {
+     "path": "./scenarios/ecommercePolicyTemplateScenario/deny_test_1.json",
+      "description": "User 456 is denied the ability to list (action) product 123 (resource)",
+      "type": "forbid"
+    }
   ]
 }
