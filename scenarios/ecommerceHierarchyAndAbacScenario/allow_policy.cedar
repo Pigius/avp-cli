@@ -6,6 +6,7 @@ permit (
 when
 {
     principal.department == resource.department &&
+    principal.department.name == "luxury" &&
     principal.rating >= 8 &&
-    resource.price > 1000000
+    resource.price > 1000000 
 };

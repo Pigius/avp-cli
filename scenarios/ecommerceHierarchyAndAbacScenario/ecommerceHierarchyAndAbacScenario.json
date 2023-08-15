@@ -15,9 +15,14 @@
       "description": "User 1 is allowed the ability to sell (action) porsche car (resource).",
       "type": "allow"
     },
-        {
+    {
      "path": "./scenarios/ecommerceHierarchyAndAbacScenario/deny_test_1.json",
       "description": "User 1 is denied the ability to sell (action) porsche car (resource), due to not matching departments.",
+      "type": "forbid"
+    },
+    {
+     "path": "./scenarios/ecommerceHierarchyAndAbacScenario/deny_test_2.json",
+      "description": "User 1 is denied the ability to sell (action) porsche car (resource), due to not matching department name.",
       "type": "forbid"
     }
   ]

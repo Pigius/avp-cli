@@ -961,7 +961,7 @@ const handleAuthorizationResponse = (
 const generateTestMessage = (scenario) => {
   let message = "\nConsider testing it with our prepared test scenarios:\n";
   message +=
-    " Use below path as argument to `IsAuthorized` from the manual approach option of the CLI:\n";
+    "Either use `Test Scenario` in main CLI to select the specific test scenario, or use below path as argument to `IsAuthorized` from the manual approach option of the CLI:\n Remember to update the policy-store-id within files.\n";
 
   for (const test of scenario.tests) {
     message += `- ${test.path} (${test.description}) ${test.type}\n`;
