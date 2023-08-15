@@ -28,12 +28,15 @@ import {
   useScenario,
 } from "./awsOperations.js";
 
-console.log("Welcome to AVP CLI!");
+console.log("🚀 Welcome to the AVP CLI Tool!");
 console.log(
-  "This tool is designed to help you interact with the AWS Verified Permissions (AVP) service. You can use it to create, manage, and delete policy stores, schemas, and policies."
+  "Designed to streamline your interactions with the AWS Verified Permissions (AVP) service."
 );
 console.log(
-  "Please ensure that you have set up your AWS credentials correctly to use this tool."
+  "🔧 Create, manage, and delete policy stores, schemas, and policies. Plus, deploy and test with predefined scenarios!"
+);
+console.log(
+  "⚠️ Ensure your AWS credentials are correctly set up before proceeding."
 );
 
 const interactiveMode = async () => {
