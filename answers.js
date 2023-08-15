@@ -153,6 +153,12 @@ export const getAnswers = () => {
               name: "policyStoreId",
               message: "Enter the ID of the policy store",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Policy Store ID cannot be empty.";
+              },
               when: (answers) =>
                 answers.action === "getPolicyStore" ||
                 answers.action === "deletePolicyStore" ||
@@ -180,12 +186,27 @@ export const getAnswers = () => {
               name: "pathToSchema",
               message: "Enter a path to schema",
               type: "input",
+              validate: function (value) {
+                if (value.trim() === "") {
+                  return "Path cannot be empty.";
+                }
+                if (value.endsWith(".json")) {
+                  return true;
+                }
+                return "Path should end with the .json extension.";
+              },
               when: (answers) => answers.action === "putSchema",
             },
             {
               name: "identitySourceId",
               message: "Enter identitySourceId",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Identity Source Id cannot be empty.";
+              },
               when: (answers) =>
                 answers.action === "deleteIdentitySource" ||
                 answers.action === "getIdentitySource" ||
@@ -195,6 +216,12 @@ export const getAnswers = () => {
               name: "policyId",
               message: "Enter the ID of the policy",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Policy ID cannot be empty.";
+              },
               when: (answers) =>
                 answers.action === "getPolicy" ||
                 answers.action === "updateStaticPolicy" ||
@@ -202,8 +229,17 @@ export const getAnswers = () => {
             },
             {
               name: "policyPath",
-              message: "Enter a path to policy (txt file)",
+              message: "Enter a path to policy (cedar extension file)",
               type: "input",
+              validate: function (value) {
+                if (value.trim() === "") {
+                  return "Path cannot be empty.";
+                }
+                if (value.endsWith(".cedar")) {
+                  return true;
+                }
+                return "Path should end with the .cedar extension.";
+              },
               when: (answers) =>
                 answers.action === "createStaticPolicy" ||
                 answers.action === "updateStaticPolicy" ||
@@ -213,12 +249,24 @@ export const getAnswers = () => {
               name: "policyDescription",
               message: "Enter the new description for the policy",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Policy description cannot be empty.";
+              },
               when: (answers) => answers.action === "updateStaticPolicy",
             },
             {
               name: "description",
               message: "Enter the description for the policy template",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Description of the policy template cannot be empty.";
+              },
               when: (answers) =>
                 answers.action === "createPolicyTemplate" ||
                 answers.action === "updatePolicyTemplate",
@@ -227,12 +275,24 @@ export const getAnswers = () => {
               name: "statement",
               message: "Enter statement of the policy ",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Policy statement cannot be empty.";
+              },
               when: (answers) => answers.action === "updatePolicyTemplate",
             },
             {
               name: "policyTemplateId",
               message: "Enter the ID for the policy template",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Policy Template ID cannot be empty.";
+              },
               when: (answers) =>
                 answers.action === "createTemplatePolicy" ||
                 answers.action === "deletePolicyTemplate" ||
@@ -243,6 +303,12 @@ export const getAnswers = () => {
               name: "principalEntityType",
               message: "Enter the entity type of the principal",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Entity type cannot be empty.";
+              },
               when: (answers) =>
                 answers.action === "createTemplatePolicy" ||
                 answers.action === "createIdentitySource" ||
@@ -252,18 +318,39 @@ export const getAnswers = () => {
               name: "principalEntityId",
               message: "Enter the entity ID of the principal",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Entity ID cannot be empty.";
+              },
               when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
               name: "resourceEntityType",
               message: "Enter the entity type of the resource",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Entity type cannot be empty.";
+              },
               when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
               name: "testFilePath",
               message: "Enter the path for json test file",
               type: "input",
+              validate: function (value) {
+                if (value.trim() === "") {
+                  return "Path to test file cannot be empty.";
+                }
+                if (value.endsWith(".json")) {
+                  return true;
+                }
+                return "Path should end with the .json extension.";
+              },
               when: (answers) =>
                 answers.action === "isAuthorized" ||
                 answers.action === "isAuthorizedWithToken",
@@ -272,12 +359,24 @@ export const getAnswers = () => {
               name: "resourceEntityId",
               message: "Enter the entity ID of the resource",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Entity ID cannot be empty.";
+              },
               when: (answers) => answers.action === "createTemplatePolicy",
             },
             {
               name: "userPoolArn",
               message: "Enter the Amazon Cognito User Pool ARN",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Amazon Cognito User Pool ARN cannot be empty.";
+              },
               when: (answers) =>
                 answers.scenario === "ecommerceCognitoIntegrationScenario" ||
                 answers.action === "createIdentitySource" ||
@@ -287,6 +386,12 @@ export const getAnswers = () => {
               name: "appClientId",
               message: "Enter the Amazon Cognito App Client ID",
               type: "input",
+              validate: function (value) {
+                if (value.trim() !== "") {
+                  return true;
+                }
+                return "Amazon Cognito App Client ID cannot be empty.";
+              },
               when: (answers) =>
                 answers.scenario === "ecommerceCognitoIntegrationScenario" ||
                 answers.action === "createIdentitySource" ||
