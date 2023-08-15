@@ -42,7 +42,11 @@ export const listPolicyStores = async (logOutput = true) => {
       wrapOnWordBoundary: false,
     });
     response.policyStores.forEach((store) => {
-      table.push([store.policyStoreId, store.arn, store.createdDate]);
+      table.push([
+        store.policyStoreId,
+        store.arn,
+        formatDate(store.createdDate),
+      ]);
     });
     if (logOutput) {
       console.log(table.toString());
@@ -109,7 +113,7 @@ export const getPolicy = async (policyStoreId, policyId, logOutput = true) => {
     table.push([
       response.policyId,
       response.policyType,
-      response.createdDate,
+      formatDate(response.createdDate),
       response.lastUpdatedDate,
     ]);
     if (logOutput) {
@@ -139,7 +143,7 @@ export const getPolicyTemplate = async (
     table.push([
       response.policyTemplateId,
       response.statement,
-      response.createdDate,
+      formatDate(response.createdDate),
       response.lastUpdatedDate,
     ]);
     if (logOutput) {
@@ -265,7 +269,11 @@ export const getPolicyStore = async (policyStoreId, logOutput = true) => {
       wordWrap: true,
       wrapOnWordBoundary: false,
     });
-    table.push([response.policyStoreId, response.arn, response.createdDate]);
+    table.push([
+      response.policyStoreId,
+      response.arn,
+      formatDate(response.createdDate),
+    ]);
     if (logOutput) {
       console.log(table.toString());
     }
@@ -294,7 +302,7 @@ export const getIdentitySource = async (
     table.push([
       response.policyStoreId,
       response.identitySourceId,
-      response.createdDate,
+      formatDate(response.createdDate),
     ]);
     if (logOutput) {
       console.log(table.toString());
@@ -475,7 +483,7 @@ export const listPolicies = async (policyStoreId, logOutput = true) => {
         table.push([
           policy.policyId,
           policy.policyType,
-          policy.createdDate,
+          formatDate(policy.createdDate),
           policy.lastUpdatedDate,
         ]);
       });
@@ -508,7 +516,7 @@ export const listPolicyTemplates = async (policyStoreId, logOutput = true) => {
         table.push([
           policyTemplate.policyTemplateId,
           policyTemplate.description,
-          policyTemplate.createdDate,
+          formatDate(policyTemplate.createdDate),
           policyTemplate.lastUpdatedDate,
         ]);
       });
@@ -583,7 +591,7 @@ const handleTemplateLinkedPoliciesScenario = async (
     table.push([
       policy.policyId,
       policyStoreId,
-      policy.createdDate,
+      formatDate(policy.createdDate),
       `${policy.principal.entityType}::${policy.principal.entityId}`,
       `${policy.resource.entityType}::${policy.resource.entityId}`,
       policy.policyTemplate,
@@ -649,7 +657,11 @@ export const useScenario = async (
         });
 
         for (const policy of policies) {
-          table.push([policy.policyId, policyStoreId, policy.createdDate]);
+          table.push([
+            policy.policyId,
+            policyStoreId,
+            formatDate(policy.createdDate),
+          ]);
         }
         console.log(table.toString());
       }
@@ -885,7 +897,11 @@ export const handleCognitoIntegrationScenario = async (
       wrapOnWordBoundary: false,
     });
     for (const policy of policies) {
-      table.push([policy.policyId, policyStoreId, policy.createdDate]);
+      table.push([
+        policy.policyId,
+        policyStoreId,
+        formatDate(policy.createdDate),
+      ]);
     }
     console.log(table.toString());
     console.log(
@@ -952,4 +968,14 @@ const generateTestMessage = (scenario) => {
   }
 
   return message;
+};
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(date.getDate()).padStart(2, "0")} ${String(
+    date.getHours()
+  ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 };
