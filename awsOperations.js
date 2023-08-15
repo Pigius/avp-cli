@@ -25,8 +25,6 @@ import {
   UpdatePolicyTemplateCommand,
   VerifiedPermissionsClient,
 } from "@aws-sdk/client-verifiedpermissions";
-import fs from "fs";
-import path from "path";
 import Table from "cli-table3";
 
 const client = new VerifiedPermissionsClient();

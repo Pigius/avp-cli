@@ -49,8 +49,9 @@ Designed to streamline your interactions with the AWS Verified Permissions (AVP)
 🔧 Create, manage, and delete policy stores, schemas, and policies. Plus, deploy and test with predefined scenarios!
 ⚠️ Ensure your AWS credentials are correctly set up before proceeding.
 ? What would you like to do? (Use arrow keys)
-❯ Use prepared scenarios
+❯ Test Scenario
   Manual approach
+  Use prepared scenarios
   Exit
 ```
 
@@ -60,6 +61,7 @@ The AVP CLI Tool supports all API operations provided by the AWS Verified Permis
 
 Making authorization decisions (with or without Cognito Identity Token)
 Using prepared scenarios
+Testing prepared scenarios
 Managing policy stores (listing, creating, updating, deleting)
 Handling schemas (adding, retrieving)
 Managing policies (creating static or template-linked, updating, retrieving, deleting)
@@ -197,35 +199,22 @@ A scenario is defined in a JSON file with the following structure:
 
 ### Testing Scenarios
 
-I've added tests for allow and deny the access for each and every scenario. Here's a brief overview:
+I've added tests for allow and deny the access for each and every scenario. Check each and every scenario examples.
 
-```json
-{
-  "policyStoreId": "unique_policy_store_id",
-  "principal": {
-    "entityType": "Entity::Type",
-    "entityId": "entity_id"
-  },
-  "action": {
-    "actionType": "Action::Type",
-    "actionId": "action_id"
-  },
-  "resource": {
-    "entityType": "Resource::Type",
-    "entityId": "resource_id"
-  },
-  "entities": {
-    "entityList": [
-      // List of entities involved in the scenario
-    ]
-  },
-  "context": {
-    "contextMap": {}
-  }
-}
+The "Test Scenario" feature in the AVP CLI Tool offers a more streamlined and efficient way to test authorization scenarios. Instead of manually specifying the path to a JSON test file every time you want to run a test, the CLI dynamically loads available test scenarios and lets you select one to execute. What you need to do is just to replace the `policy store id`. This reduces the repetitive task of copying and pasting file paths, making the testing process faster and more user-friendly.
+
+```bash
+? What would you like to do? Test Scenario
+? Choose a scenario documentsScenario
+? Choose a test User Daniel is allowed the ability to view (action) the Payslip (resource) (allow)
+Making authorization decision...
+┌──────────┬──────────────────────────────┬────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│ Decision │ Determining Policies         │ Errors             │ Policy Store ID              │ Principal                    │ Action                       │ Resource                     │ Context                      │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ ALLOW    │ UeLnsJJiAjYxZx9xy3yNgE       │                    │ Yc72495SiKGbsA5N1wa5Ng       │ DocumentManagementPlatform:: │ DocumentManagementPlatform:: │ DocumentManagementPlatform:: │ {}                           │
+│          │                              │                    │                              │ User::Daniel                 │ Action::View                 │ Document::Payslip            │                              │
+└──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────
 ```
-
-For a detailed example of this structure, please refer to the `structureAuthorizationRequest.json` file located in the root directory, or check each and every scenario examples.
 
 ## Roles and Permissions
 

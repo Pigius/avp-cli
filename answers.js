@@ -1,4 +1,6 @@
 import inquirer from "inquirer";
+import fs from "fs";
+import path from "path";
 
 export const getAnswers = () => {
   return inquirer
@@ -8,14 +10,47 @@ export const getAnswers = () => {
         message: "What would you like to do?",
         type: "list",
         choices: [
-          { name: "Use prepared scenarios", value: "scenarios" },
+          { name: "Test Scenario", value: "testScenario" },
           { name: "Manual approach", value: "manual" },
+          { name: "Use prepared scenarios", value: "scenarios" },
           { name: "Exit", value: "exit" },
         ],
       },
     ])
     .then((answers) => {
-      if (answers.action === "scenarios") {
+      if (answers.action === "testScenario") {
+        let scenarios = fetchScenarios();
+        return inquirer
+          .prompt([
+            {
+              name: "selectedScenario",
+              message: "Choose a scenario",
+              type: "list",
+              choices: scenarios,
+            },
+          ])
+          .then((scenarioAnswers) => {
+            if (scenarioAnswers.selectedScenario === "back") {
+              return getAnswers();
+            }
+            let tests = fetchTestsForScenario(scenarioAnswers.selectedScenario);
+            return inquirer
+              .prompt([
+                {
+                  name: "selectedTest",
+                  message: "Choose a test",
+                  type: "list",
+                  choices: tests,
+                },
+              ])
+              .then((testAnswers) => {
+                return {
+                  action: "isAuthorized",
+                  testFilePath: testAnswers.selectedTest,
+                };
+              });
+          });
+      } else if (answers.action === "scenarios") {
         return inquirer
           .prompt([
             {
@@ -410,3 +445,23 @@ export const getAnswers = () => {
       }
     });
 };
+
+const fetchScenarios = () => {
+  const scenarioDir = "./scenarios/";
+  const scenarioDirs = fs
+    .readdirSync(scenarioDir)
+    .filter((dir) => fs.statSync(path.join(scenarioDir, dir)).isDirectory());
+  scenarioDirs.push({ name: "Back", value: "back" });
+
+  return scenarioDirs;
+};
+
+function fetchTestsForScenario(scenarioName) {
+  const scenarioData = JSON.parse(
+    fs.readFileSync(`./scenarios/${scenarioName}/${scenarioName}.json`, "utf-8")
+  );
+  return scenarioData.tests.map((test) => ({
+    name: `${test.description} (${test.type})`,
+    value: test.path,
+  }));
+}
