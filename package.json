@@ -1,9 +1,26 @@
 {
   "name": "avp-cli",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Small CLI to help interacts with the AWS Verified Permissions (AVP) service.",
   "main": "index.js",
   "type": "module",
+  "keywords": [
+    "aws",
+    "avp",
+    "cli",
+    "permissions",
+    "authorization",
+    "policies",
+    "cedar",
+    "policy-language",
+    "policy-store",
+    "schema",
+    "isAuthorized",
+    "prototyping",
+    "policy-management",
+    "aws-services",
+    "aws-verified-permissions"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Pigius/avp-cli.git"
