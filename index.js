@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { getAnswers } from "./answers.js";
 import {
   createPolicyStore,
