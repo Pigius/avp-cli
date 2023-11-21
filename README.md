@@ -105,6 +105,36 @@ Making authorization decision...
 
 ```
 
+## Using the `batchIsAuthorized` Action
+
+The `batchIsAuthorized` action in the AVP CLI Tool allows you to make authorization decisions for multiple requests in a single operation. This is particularly useful when you need to evaluate a batch of authorization requests simultaneously, improving efficiency and reducing the number of individual calls to the AWS Verified Permissions service.
+
+How to use `batchIsAuthorized`:
+
+- Prepare the JSON File: Create a JSON file with the structure defined in `structureBatchAuthorizationRequest.json` located in the root directory of the project. This file should contain common entities list, and an array of authorization requests, each specifying the principal, action, resource, and context.
+- Limitation: The batchIsAuthorized action can process up to 30 requests at a time. Ensure that your JSON file does not contain more than 30 requests to avoid errors.
+- Launch the AVP CLI Tool and select the `batchIsAuthorized` action (from the manual approach option).
+- When prompted, enter the path to your JSON file containing the batch authorization requests.
+- The tool will process each request in the batch and return the authorization decisions (ALLOW or DENY) for each one. The results will be displayed in a formatted table, showing the decision, determining policies, and any errors for each request.
+
+Example Usage:
+
+```bash
+? What would you like to do? Manual approach
+? What would you like to do? Make a batch authorization decision
+? Enter the path for the JSON test file structureBatchAuthorizationRequest.json
+Making batch authorization decisions...
+┌──────────┬──────────────────────────────┬────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│ Decision │ Determining Policies         │ Errors             │ Policy Store ID              │ Principal                    │ Action                       │ Resource                     │ Context                      │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ ALLOW    │ [Policy IDs]                 │                    │ [Policy Store ID]            │ [Principal]                  │ [Action]                     │ [Resource]                   │ [Context]                    │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ DENY     │ [Policy IDs]                 │                    │ [Policy Store ID]            │ [Principal]                  │ [Action]                     │ [Resource]                   │ [Context]                    │
+└──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
+
+
+```
+
 ## Scenarios
 
 Scenarios are predefined sets of policies (policy store, schema, and policies) that you can run to interact with the AVP service. Each scenario is defined in a JSON file and includes a validation mode, a schema, and a set of policies.

@@ -1,5 +1,5 @@
 {
-    "policyStoreId": "unique_policy_store_id",
+    "policyStoreId": "your-policy-store-id",
     "identityToken": "IDENTITY_TOKEN_HERE",
     "action": {
         "actionType": "Action::Type",

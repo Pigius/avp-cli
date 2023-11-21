@@ -1,4 +1,5 @@
 import {
+  BatchIsAuthorizedCommand,
   CreateIdentitySourceCommand,
   DeleteIdentitySourceCommand,
   CreatePolicyCommand,
@@ -828,6 +829,37 @@ export const IsAuthorized = async (testFilePath) => {
   }
 };
 
+export const batchIsAuthorized = async (batchTestFilePath) => {
+  const fileContent = fs.readFileSync(batchTestFilePath, "utf8");
+  const input = JSON.parse(fileContent);
+
+  if (input.policyStoreId === "your-policy-store-id") {
+    console.error(
+      "Please set the 'policyStoreId' in your JSON file before proceeding."
+    );
+    return;
+  }
+
+  // batch authorization allows to process up to 30 authorization decisions for a single principal or resource in a single API call.
+  if (input.requests && input.requests.length > 30) {
+    console.error(
+      "Batch request limit exceeded. Only up to 30 requests are allowed."
+    );
+    return;
+  }
+
+  const command = new BatchIsAuthorizedCommand(input);
+
+  try {
+    console.log("Making batch authorization decision...");
+    const response = await client.send(command);
+
+    handleBatchAuthorizationResponse(response, input.policyStoreId);
+  } catch (error) {
+    console.error(`Failed to make authorization decision: ${error.message}`);
+  }
+};
+
 export const isAuthorizedWithToken = async (testFilePath) => {
   const fileContent = fs.readFileSync(testFilePath, "utf8");
   const input = JSON.parse(fileContent);
@@ -954,6 +986,49 @@ const handleAuthorizationResponse = (
     `${resource.entityType}::${resource.entityId}`,
     JSON.stringify(context.contextMap),
   ]);
+
+  console.log(table.toString());
+};
+
+const handleBatchAuthorizationResponse = (response, policyStoreId) => {
+  const table = new Table({
+    head: [
+      "Decision",
+      "Determining Policies",
+      "Errors",
+      "Policy Store ID",
+      "Principal",
+      "Action",
+      "Resource",
+    ],
+    colWidths: [10, 30, 20, 30, 30, 30, 30, 30],
+    wordWrap: true,
+    wrapOnWordBoundary: false,
+  });
+
+  response.results.forEach((result) => {
+    const determiningPolicies = result.determiningPolicies
+      .map((policy) => policy.policyId)
+      .join(", ");
+    const errors = result.errors
+      .map((error) => error.errorDescription)
+      .join(", ");
+
+    const request = result.request;
+    const principal = `${request.principal.entityType}::${request.principal.entityId}`;
+    const action = `${request.action.actionType}::${request.action.actionId}`;
+    const resource = `${request.resource.entityType}::${request.resource.entityId}`;
+
+    table.push([
+      result.decision,
+      determiningPolicies,
+      errors,
+      policyStoreId,
+      principal,
+      action,
+      resource,
+    ]);
+  });
 
   console.log(table.toString());
 };

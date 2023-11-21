@@ -1,7 +1,7 @@
 {
-    "policyStoreId": "unique_policy_store_id",
+    "policyStoreId": "your-policy-store-id",
     "principal": {
-        "entityType": "Entity::Type",
+        "entityType": "Principal::Type",
         "entityId": "entity_id"
     },
     "action": {

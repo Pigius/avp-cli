@@ -1,0 +1,67 @@
+{
+   "policyStoreId": "your-policy-store-id",
+   "entities": {
+      "entityList": [
+         {
+            "identifier": {
+               "entityType": "Principal::Type",
+               "entityId": "entity_id"
+            },
+            "attributes": {},
+            "parents": []
+         },
+         {
+            "identifier": {
+               "entityType": "Resource::Type",
+               "entityId": "entity_id"
+            },
+            "attributes": {},
+            "parents": []
+         },
+         {
+            "identifier": {
+               "entityType": "Resource::Type",
+               "entityId": "entity_id"
+            },
+            "attributes": {},
+            "parents": []
+         }
+      ]
+   },
+   "requests": [
+      {
+         "principal": {
+            "entityType": "Principal::Type",
+            "entityId": "entity_id"
+         },
+         "action": {
+            "actionType": "Action::Type",
+            "actionId": "action_id"
+         },
+         "resource": {
+            "entityType": "Resource::Type",
+            "entityId": "resource_id"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      },
+      {
+         "principal": {
+            "entityType": "Principal::Type",
+            "entityId": "entity_id"
+         },
+         "action": {
+            "actionType": "Action::Type",
+            "actionId": "action_id"
+         },
+         "resource": {
+            "entityType": "Resource::Type",
+            "entityId": "resource_id"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      }
+   ]
+}

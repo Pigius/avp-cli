@@ -126,6 +126,10 @@ export const getAnswers = () => {
                   value: "isAuthorized",
                 },
                 {
+                  name: "Make a batch authorization decision",
+                  value: "batchIsAuthorized",
+                },
+                {
                   name: "Make an authorization decision with Cognito Identity Token",
                   value: "isAuthorizedWithToken",
                 },
@@ -389,6 +393,22 @@ export const getAnswers = () => {
               when: (answers) =>
                 answers.action === "isAuthorized" ||
                 answers.action === "isAuthorizedWithToken",
+            },
+            {
+              name: "batchTestFilePath",
+              message: "Enter the path for batch authorization json test file",
+              type: "input",
+              default: "structureBatchAuthorizationRequest.json",
+              validate: function (value) {
+                if (value.trim() === "") {
+                  return "Path to test file cannot be empty.";
+                }
+                if (value.endsWith(".json")) {
+                  return true;
+                }
+                return "Path should end with the .json extension.";
+              },
+              when: (answers) => answers.action === "batchIsAuthorized",
             },
             {
               name: "resourceEntityId",

@@ -2,6 +2,7 @@
 
 import { getAnswers } from "./answers.js";
 import {
+  batchIsAuthorized,
   createPolicyStore,
   createStaticPolicy,
   createPolicyTemplate,
@@ -51,6 +52,9 @@ const interactiveMode = async () => {
       switch (answers.action) {
         case "isAuthorized":
           await IsAuthorized(answers.testFilePath);
+          break;
+        case "batchIsAuthorized":
+          await batchIsAuthorized(answers.batchTestFilePath);
           break;
         case "isAuthorizedWithToken":
           await isAuthorizedWithToken(answers.testFilePath);
