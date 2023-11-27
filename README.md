@@ -253,6 +253,7 @@ Making authorization decision...
 
 The new "Test Batch Authorization Scenario" feature allows you to test multiple authorization decisions simultaneously. This is particularly useful in scenarios, where a single user action might involve multiple resources or actions.
 
+```bash
 ? What would you like to do? Test Batch Authorization Scenario
 ? Choose a scenario ecommerceBatchScenario
 ? Choose a test Checking multiple resources, to check which orders can admin edit.
@@ -267,6 +268,7 @@ Making batch authorization decision...
 ├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
 │ DENY │ │ │ PCBQvq25n9296Cq4w76CJu │ EcommerceStore::User::Daniel │ EcommerceStore::Action::Edit │ EcommerceStore::Order::44444 │
 └──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
+```
 
 ## Roles and Permissions
 
