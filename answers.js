@@ -11,6 +11,10 @@ export const getAnswers = () => {
         type: "list",
         choices: [
           { name: "Test Scenario", value: "testScenario" },
+          {
+            name: "Test Batch Authorization Scenario",
+            value: "testBatchAuthorizationScenario",
+          },
           { name: "Manual approach", value: "manual" },
           { name: "Use prepared scenarios", value: "scenarios" },
           { name: "Exit", value: "exit" },
@@ -50,6 +54,39 @@ export const getAnswers = () => {
                 };
               });
           });
+      } else if (answers.action === "testBatchAuthorizationScenario") {
+        return inquirer
+          .prompt([
+            {
+              name: "selectedScenario",
+              message: "Choose a scenario",
+              type: "list",
+              choices: ["ecommerceBatchScenario", "back"],
+            },
+          ])
+          .then((scenarioAnswers) => {
+            if (scenarioAnswers.selectedScenario === "back") {
+              return getAnswers();
+            }
+            let tests = fetchBatchTestsForScenario(
+              scenarioAnswers.selectedScenario
+            );
+            return inquirer
+              .prompt([
+                {
+                  name: "selectedTest",
+                  message: "Choose a test",
+                  type: "list",
+                  choices: tests,
+                },
+              ])
+              .then((testAnswers) => {
+                return {
+                  action: "batchIsAuthorized",
+                  batchTestFilePath: testAnswers.selectedTest,
+                };
+              });
+          });
       } else if (answers.action === "scenarios") {
         return inquirer
           .prompt([
@@ -78,6 +115,10 @@ export const getAnswers = () => {
                 {
                   name: "Ecommerce with Hierarchy and ABAC Scenario",
                   value: "ecommerceHierarchyAndAbacScenario",
+                },
+                {
+                  name: "Ecommerce with Batch Authorization",
+                  value: "ecommerceBatchScenario",
                 },
                 { name: "Back", value: "back" },
               ],
@@ -482,6 +523,16 @@ function fetchTestsForScenario(scenarioName) {
   );
   return scenarioData.tests.map((test) => ({
     name: `${test.description} (${test.type})`,
+    value: test.path,
+  }));
+}
+
+function fetchBatchTestsForScenario(scenarioName) {
+  const scenarioData = JSON.parse(
+    fs.readFileSync(`./scenarios/${scenarioName}/${scenarioName}.json`, "utf-8")
+  );
+  return scenarioData.batchTests.map((test) => ({
+    name: `${test.description}`,
     value: test.path,
   }));
 }

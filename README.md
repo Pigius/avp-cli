@@ -183,7 +183,8 @@ Consider testing it with our prepared test scenarios:
 | [Ecommerce with Group usage Scenario](scenarios/ecommerceGroupScenario/ecommerceGroupScenario.json)                                         | This scenario demonstrates the use of Groups in AWS Verified Permissions. It allows customers who belong to the VIP group to preorder products.                                                                                                                                                                                                    |
 | [Ecommerce with Policy Template usage Scenario](scenarios/ecommercePolicyTemplateScenario/ecommercePolicyTemplateScenario.json)             | This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products.                                                                                                                                                                                     |
 | [Ecommerce with Cognito Integration usage Scenario](scenarios/ecommerceCognitoIntegrationScenario/ecommerceCognitoIntegrationScenario.json) | This scenario demonstrates the use of Cognito integration in AWS Verified Permissions. It allows sellers to discount if they have agreed discount privilege. Refer to this [blogpost](https://dev.to/aws-builders/authorization-and-amazon-verified-permissions-a-new-way-to-manage-permissions-part-viii-integration-with-cognito-pgb) for setup. |
-| [Ecommerce with Hierarchy and ABAC Scenario](scenarios/ecommerceHierarchyAndAbacScenario/ecommerceCognitoIntegrationScenario.json)          | This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.                                                                                                                                                                    |
+| [Ecommerce with Hierarchy and ABAC Scenario](scenarios/ecommerceHierarchyAndAbacScenario/ecommerceHierarchyAndAbacScenario.json)            | This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.                                                                                                                                                                    |
+| [Ecommerce with Batch Authorization Scenario](scenarios/ecommerceBatchScenario/ecommerceBatchScenario.json)                                 | This scenario demonstrates the use of Batch Authorization in AWS Verified Permissions.                                                                                                                                                                                                                                                             |
 
 ### Note
 
@@ -229,9 +230,11 @@ A scenario is defined in a JSON file with the following structure:
 
 ### Testing Scenarios
 
-I've added tests for allow and deny the access for each and every scenario. Check each and every scenario examples.
+I've enhanced the AVP CLI Tool with the addition of batch authorization tests, allowing to efficiently test multiple authorization scenarios in a single operation. This feature is particularly useful for scenarios where you need to check multiple resources or principals in one go. As with the standard test scenarios, you only need to replace the policy store id to get started.
 
-The "Test Scenario" feature in the AVP CLI Tool offers a more streamlined and efficient way to test authorization scenarios. Instead of manually specifying the path to a JSON test file every time you want to run a test, the CLI dynamically loads available test scenarios and lets you select one to execute. What you need to do is just to replace the `policy store id`. This reduces the repetitive task of copying and pasting file paths, making the testing process faster and more user-friendly.
+#### Standard Test Scenario
+
+The "Test Scenario" feature in the AVP CLI Tool offers a streamlined way to test individual authorization scenarios. The CLI dynamically loads available test scenarios, allowing you to select and execute them with ease. This approach simplifies the testing process, making it faster and more user-friendly.
 
 ```bash
 ? What would you like to do? Test Scenario
@@ -245,6 +248,25 @@ Making authorization decision...
 │          │                              │                    │                              │ User::Daniel                 │ Action::View                 │ Document::Payslip            │                              │
 └──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────
 ```
+
+#### Batch Authorization Scenario
+
+The new "Test Batch Authorization Scenario" feature allows you to test multiple authorization decisions simultaneously. This is particularly useful in scenarios, where a single user action might involve multiple resources or actions.
+
+? What would you like to do? Test Batch Authorization Scenario
+? Choose a scenario ecommerceBatchScenario
+? Choose a test Checking multiple resources, to check which orders can admin edit.
+./scenarios/ecommerceBatchScenario/multiple_resource_batch_test.json
+Making batch authorization decision...
+┌──────────┬──────────────────────────────┬────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│ Decision │ Determining Policies │ Errors │ Policy Store ID │ Principal │ Action │ Resource │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ ALLOW │ RqTig3UirX1KxPCesHDjjj │ │ PCBQvq25n9296Cq4w76CJu │ EcommerceStore::User::Daniel │ EcommerceStore::Action::Edit │ EcommerceStore::Order::12345 │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ DENY │ │ │ PCBQvq25n9296Cq4w76CJu │ EcommerceStore::User::Daniel │ EcommerceStore::Action::Edit │ EcommerceStore::Order::67890 │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ DENY │ │ │ PCBQvq25n9296Cq4w76CJu │ EcommerceStore::User::Daniel │ EcommerceStore::Action::Edit │ EcommerceStore::Order::44444 │
+└──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
 
 ## Roles and Permissions
 

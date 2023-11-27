@@ -1,0 +1,109 @@
+{
+   "policyStoreId": "PCBQvq25n9296Cq4w76CJu",
+   "entities": {
+      "entityList": [
+         {
+            "identifier": {
+               "entityType": "EcommerceStore::User",
+               "entityId": "Daniel"
+            },
+            "attributes": {},
+            "parents": [
+               {
+                  "entityType": "EcommerceStore::Role",
+                  "entityId": "admin"
+               }
+            ]
+         },
+         {
+            "identifier": {
+               "entityType": "EcommerceStore::Order",
+               "entityId": "12345"
+            },
+            "attributes": {
+               "status": {
+                  "string": "paid"
+               }
+            },
+            "parents": []
+         },
+         {
+            "identifier": {
+               "entityType": "EcommerceStore::Order",
+               "entityId": "67890"
+            },
+            "attributes": {
+               "status": {
+                  "string": "in delivery"
+               }
+            },
+            "parents": []
+         },
+         {
+            "identifier": {
+               "entityType": "EcommerceStore::Order",
+               "entityId": "44444"
+            },
+            "attributes": {
+               "status": {
+                  "string": "delivered"
+               }
+            },
+            "parents": []
+         }
+      ]
+   },
+   "requests": [
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Daniel"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "Edit"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Order",
+            "entityId": "12345"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      },
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Daniel"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "Edit"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Order",
+            "entityId": "67890"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      },
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Daniel"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "Edit"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Order",
+            "entityId": "44444"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      }
+   ]
+}

@@ -1,0 +1,47 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "principal": {
+        "entityType": "EcommerceStore::User",
+        "entityId": "Daniel"
+    },
+    "action": {
+        "actionType": "EcommerceStore::Action",
+        "actionId": "Edit"
+    },
+    "resource": {
+        "entityType": "EcommerceStore::Order",
+        "entityId": "12345"
+    },
+    "entities": {
+        "entityList": [
+    {
+        "identifier": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Daniel"
+        },
+        "attributes": {},
+        "parents": [
+            {
+                "entityType": "EcommerceStore::Role",
+                "entityId": "admin"
+            }
+        ]
+    },
+    {
+        "identifier": {
+            "entityType": "EcommerceStore::Order",
+            "entityId": "12345"
+        },
+        "attributes": {
+            "status": {
+                "string": "paid"
+            }
+        },
+        "parents": []
+    }
+]
+    },
+    "context": {
+        "contextMap": {}
+    }
+}

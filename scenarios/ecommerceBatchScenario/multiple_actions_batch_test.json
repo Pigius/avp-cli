@@ -1,0 +1,119 @@
+{
+   "policyStoreId": "your-policy-store-id",
+   "entities": {
+      "entityList": [
+         {
+            "identifier": {
+               "entityType": "EcommerceStore::User",
+               "entityId": "Ken"
+            },
+            "attributes": {
+               "premiumMembership": {
+                  "boolean": true
+               }
+            },
+            "parents": [
+               {
+                  "entityType": "EcommerceStore::Role",
+                  "entityId": "customer"
+               }
+            ]
+         },
+         {
+            "identifier": {
+               "entityType": "EcommerceStore::Product",
+               "entityId": "Hat"
+            },
+            "attributes": {},
+            "parents": []
+         }
+      ]
+   },
+   "requests": [
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Ken"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "View"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Product",
+            "entityId": "Hat"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      },
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Ken"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "GetDiscount"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Product",
+            "entityId": "Hat"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      },
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Ken"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "Buy"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Product",
+            "entityId": "Hat"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      },
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Ken"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "Preorder"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Product",
+            "entityId": "Hat"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      },
+      {
+         "principal": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Ken"
+         },
+         "action": {
+            "actionType": "EcommerceStore::Action",
+            "actionId": "Edit"
+         },
+         "resource": {
+            "entityType": "EcommerceStore::Product",
+            "entityId": "Hat"
+         },
+         "context": {
+            "contextMap": {}
+         }
+      }
+   ]
+}

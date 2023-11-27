@@ -1,0 +1,58 @@
+{
+  "validationMode": "STRICT",
+  "name": "Ecommerce with Batch Scenario",
+  "description": "This scenario demonstrates the use Batch Authorization feature in AWS Verified Permissions.",
+  "schemaPath": "./scenarios/ecommerceBatchScenario/schema.json",
+  "policies": [
+    {
+      "path": "./scenarios/ecommerceBatchScenario/allow_policy_1.cedar",
+      "description": "Allows admin to edit order if status is paid"
+    },
+    {
+      "path": "./scenarios/ecommerceBatchScenario/allow_policy_2.cedar",
+      "description": "Allows customer to buy and view products"
+    },
+    {
+      "path": "./scenarios/ecommerceBatchScenario/allow_policy_3.cedar",
+      "description": "Allows customer with premiumMembership to Get Discount and to Preorder"
+    }
+  ],
+  "tests": [
+    {
+     "path": "./scenarios/ecommerceBatchScenario/allow_test_1.json",
+      "description": "User Daniel who is an admin, is allowed to edit order as the status is paid.",
+      "type": "allow"
+    },
+    {
+     "path": "./scenarios/ecommerceBatchScenario/allow_test_2.json",
+      "description": "User Tom who is a customer, is allowed to view any product.",
+      "type": "allow"
+    },
+    {
+     "path": "./scenarios/ecommerceBatchScenario/allow_test_3.json",
+      "description": "User Ken who is a customer with premiumMembership, is allowed to GetDiscount on product.",
+      "type": "allow"
+    },
+    {
+     "path": "./scenarios/ecommerceBatchScenario/deny_test_1.json",
+      "description": "User Daniel who is a customer, is denied to edit order.",
+      "type": "forbid"
+    },
+    {
+     "path": "./scenarios/ecommerceBatchScenario/deny_test_2.json",
+      "description": "User Ken who is a customer without premiumMembership, is denied to GetDiscount on product.",
+      "type": "forbid"
+    }
+  ],
+  "batchTests": [
+    {
+     "path": "./scenarios/ecommerceBatchScenario/multiple_actions_batch_test.json",
+      "description": "Checking multiple actions for a single principal (For specific product, What action can be taken by Ken"
+    },
+    {
+     "path": "./scenarios/ecommerceBatchScenario/multiple_resource_batch_test.json",
+      "description": "Checking multiple resources, to check which orders can admin edit."
+    }
+  ]
+}
+

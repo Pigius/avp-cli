@@ -1,0 +1,43 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "principal": {
+        "entityType": "EcommerceStore::User",
+        "entityId": "Tom"
+    },
+    "action": {
+        "actionType": "EcommerceStore::Action",
+        "actionId": "View"
+    },
+    "resource": {
+        "entityType": "EcommerceStore::Product",
+        "entityId": "Hat"
+    },
+    "entities": {
+        "entityList": [
+    {
+        "identifier": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Tom"
+        },
+        "attributes": {},
+        "parents": [
+            {
+                "entityType": "EcommerceStore::Role",
+                "entityId": "customer"
+            }
+        ]
+    },
+    {
+        "identifier": {
+            "entityType": "EcommerceStore::Product",
+            "entityId": "Hat"
+        },
+        "attributes": {},
+        "parents": []
+    }
+]
+    },
+    "context": {
+        "contextMap": {}
+    }
+}

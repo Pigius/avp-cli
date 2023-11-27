@@ -1,0 +1,47 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "principal": {
+        "entityType": "EcommerceStore::User",
+        "entityId": "Ken"
+    },
+    "action": {
+        "actionType": "EcommerceStore::Action",
+        "actionId": "GetDiscount"
+    },
+    "resource": {
+        "entityType": "EcommerceStore::Product",
+        "entityId": "Hat"
+    },
+    "entities": {
+        "entityList": [
+    {
+        "identifier": {
+            "entityType": "EcommerceStore::User",
+            "entityId": "Ken"
+        },
+        "attributes": {
+            "premiumMembership": {
+                "boolean": false
+            }
+        },
+        "parents": [
+            {
+                "entityType": "EcommerceStore::Role",
+                "entityId": "customer"
+            }
+        ]
+    },
+    {
+        "identifier": {
+            "entityType": "EcommerceStore::Product",
+            "entityId": "Hat"
+        },
+        "attributes": {},
+        "parents": []
+    }
+]
+    },
+    "context": {
+        "contextMap": {}
+    }
+}
