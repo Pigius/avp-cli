@@ -1,5 +1,6 @@
 {
   "validationMode": "STRICT",
+  "policyStoreDescription": "Policy store for the Hierarchy and ABAC Scenario, created via avp-cli tool",
   "name": "Ecommerce with Hierarchy and ABAC Scenario",
   "description": "This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.",
   "schemaPath": "./scenarios/ecommerceHierarchyAndAbacScenario/schema.json",

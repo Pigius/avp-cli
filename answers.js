@@ -220,16 +220,6 @@ export const getAnswers = () => {
               ],
             },
             {
-              name: "validationMode",
-              message: "Choose a validation mode for the policy store",
-              type: "list",
-              choices: ["OFF", "STRICT"],
-              default: "STRICT",
-              when: (answers) =>
-                answers.action === "createPolicyStore" ||
-                answers.action === "updatePolicyStore",
-            },
-            {
               name: "policyStoreId",
               message: "Enter the ID of the policy store",
               type: "input",
@@ -261,6 +251,16 @@ export const getAnswers = () => {
                 answers.action === "updatePolicyTemplate" ||
                 answers.action === "createIdentitySource" ||
                 answers.action === "updateIdentitySource",
+            },
+            {
+              name: "validationMode",
+              message: "Choose a validation mode for the policy store",
+              type: "list",
+              choices: ["OFF", "STRICT"],
+              default: "STRICT",
+              when: (answers) =>
+                answers.action === "createPolicyStore" ||
+                answers.action === "updatePolicyStore",
             },
             {
               name: "pathToSchema",
@@ -336,6 +336,14 @@ export const getAnswers = () => {
                 return "Policy description cannot be empty.";
               },
               when: (answers) => answers.action === "updateStaticPolicy",
+            },
+            {
+              name: "policyStoreDescription",
+              message: "Enter the description for the policy store",
+              type: "input",
+              when: (answers) =>
+                answers.action === "createPolicyStore" ||
+                answers.action === "updatePolicyStore",
             },
             {
               name: "description",

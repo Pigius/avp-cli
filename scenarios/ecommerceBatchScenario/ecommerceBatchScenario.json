@@ -1,5 +1,6 @@
 {
   "validationMode": "STRICT",
+  "policyStoreDescription": "Policy store for the Batch Scenario, created via avp-cli tool",
   "name": "Ecommerce with Batch Scenario",
   "description": "This scenario demonstrates the use Batch Authorization feature in AWS Verified Permissions.",
   "schemaPath": "./scenarios/ecommerceBatchScenario/schema.json",

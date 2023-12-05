@@ -190,11 +190,16 @@ export const updateStaticPolicy = async (
   }
 };
 
-export const createPolicyStore = async (validationMode, logOutput = true) => {
+export const createPolicyStore = async (
+  validationMode,
+  policyStoreDescription,
+  logOutput = true
+) => {
   const input = {
     validationSettings: {
       mode: validationMode,
     },
+    description: policyStoreDescription,
   };
   const createCommand = new CreatePolicyStoreCommand(input);
   try {
@@ -211,6 +216,7 @@ export const createPolicyStore = async (validationMode, logOutput = true) => {
 export const updatePolicyStore = async (
   policyStoreId,
   validationMode,
+  policyStoreDescription,
   logOutput = true
 ) => {
   const input = {
@@ -218,6 +224,7 @@ export const updatePolicyStore = async (
     validationSettings: {
       mode: validationMode,
     },
+    description: policyStoreDescription,
   };
   const createCommand = new UpdatePolicyStoreCommand(input);
   try {
@@ -616,6 +623,7 @@ export const useScenario = async (
 
     const policyStoreId = await createPolicyStore(
       scenario.validationMode,
+      scenario.policyStoreDescription,
       false
     );
     console.log(`Policy store created with ID: ${policyStoreId}`);

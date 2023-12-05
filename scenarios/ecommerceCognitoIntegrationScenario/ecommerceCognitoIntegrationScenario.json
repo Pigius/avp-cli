@@ -1,5 +1,6 @@
 {
   "validationMode": "STRICT",
+  "policyStoreDescription": "Policy store for the Cognito Integration Scenario, created via avp-cli tool",
   "name": "Ecommerce with Cognito Integration Scenario",
   "description": "This scenario demonstrates the integration of AWS Verified Permissions with Amazon Cognito. It allows sellers to list their own products and uses Cognito for identity management.",
   "schemaPath": "./scenarios/ecommerceCognitoIntegrationScenario/schema.json",

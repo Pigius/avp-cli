@@ -1,5 +1,6 @@
 {
   "validationMode": "STRICT",
+  "policyStoreDescription": "Policy store for the Documents Scenario, created via avp-cli tool",
   "name": "Documents Scenario",
   "description": "This is a basic scenario with a document management platform schema and two policies.",
   "schemaPath": "./scenarios/documentsScenario/schema.json",

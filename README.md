@@ -199,6 +199,7 @@ A scenario is defined in a JSON file with the following structure:
 ```json
 {
   "validationMode": "STRICT",
+  "policyStoreDescription": "Policy store for the Context Scenario, created via avp-cli tool",
   "name": "Ecommerce with Context usage Scenario",
   "description": "This scenario demonstrates the use of context in AWS Verified Permissions. It allows customers to view products only when they are in the US region.",
   "schemaPath": "./scenarios/ecommerceContextScenario/schema.json",

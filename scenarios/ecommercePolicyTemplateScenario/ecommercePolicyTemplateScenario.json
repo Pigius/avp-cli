@@ -1,5 +1,6 @@
 {
   "validationMode": "STRICT",
+  "policyStoreDescription": "Policy store for the Policy Template Scenario, created via avp-cli tool",
   "name": "Ecommerce with Policy Template Scenario",
   "description": "This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products.",
   "schemaPath": "./scenarios/ecommercePolicyTemplateScenario/schema.json",

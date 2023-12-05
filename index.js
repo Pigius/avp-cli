@@ -78,7 +78,10 @@ const interactiveMode = async () => {
           await useScenario("ecommerceBatchScenario");
           break;
         case "createPolicyStore":
-          await createPolicyStore(answers.validationMode);
+          await createPolicyStore(
+            answers.validationMode,
+            answers.policyStoreDescription
+          );
           break;
         case "createStaticPolicy":
           await createStaticPolicy(
@@ -199,7 +202,8 @@ const interactiveMode = async () => {
         case "updatePolicyStore":
           await updatePolicyStore(
             answers.policyStoreId,
-            answers.validationMode
+            answers.validationMode,
+            answers.policyStoreDescription
           );
           break;
         case "updateStaticPolicy":

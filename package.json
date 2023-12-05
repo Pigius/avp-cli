@@ -1,6 +1,6 @@
 {
   "name": "avp-cli",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Small CLI to help interacts with the AWS Verified Permissions (AVP) service.",
   "main": "index.js",
   "type": "module",
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/Pigius/avp-cli",
   "dependencies": {
-    "@aws-sdk/client-verifiedpermissions": "^3.454.0",
+    "@aws-sdk/client-verifiedpermissions": "^3.465.0",
     "cli-table3": "^0.6.2",
     "inquirer": "^9.1.5"
   }
