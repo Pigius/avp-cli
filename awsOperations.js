@@ -37,7 +37,7 @@ export const listPolicyStores = async (logOutput = true) => {
   try {
     const response = await client.send(command);
     const table = new Table({
-      head: ["ID", "ARN", "Created Date"],
+      head: ["ID", "ARN", "Description", "Created Date"],
       colWidths: [24, 80, 40],
       wordWrap: true,
       wrapOnWordBoundary: false,
@@ -46,6 +46,7 @@ export const listPolicyStores = async (logOutput = true) => {
       table.push([
         store.policyStoreId,
         store.arn,
+        store.description,
         formatDate(store.createdDate),
       ]);
     });
@@ -272,7 +273,7 @@ export const getPolicyStore = async (policyStoreId, logOutput = true) => {
     const response = await client.send(command);
 
     const table = new Table({
-      head: ["ID", "ARN", "Created Date"],
+      head: ["ID", "ARN", "Description", "Created Date"],
       colWidths: [24, 80, 40],
       wordWrap: true,
       wrapOnWordBoundary: false,
@@ -280,6 +281,7 @@ export const getPolicyStore = async (policyStoreId, logOutput = true) => {
     table.push([
       response.policyStoreId,
       response.arn,
+      response.description,
       formatDate(response.createdDate),
     ]);
     if (logOutput) {
