@@ -48,7 +48,7 @@
   "batchTests": [
     {
      "path": "./scenarios/ecommerceBatchScenario/multiple_actions_batch_test.json",
-      "description": "Checking multiple actions for a single principal (For specific product, What action can be taken by Ken"
+      "description": "Checking multiple actions for a single principal (For specific product, what actions can be taken by Ken)"
     },
     {
      "path": "./scenarios/ecommerceBatchScenario/multiple_resource_batch_test.json",
