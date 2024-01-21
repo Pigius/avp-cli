@@ -914,7 +914,7 @@ export const handleCognitoIntegrationScenario = async (
   appClientId
 ) => {
   try {
-    identityResponse = await createIdentitySource(
+    const identityResponse = await createIdentitySource(
       policyStoreId,
       scenario.principalEntityType,
       userPoolArn,
