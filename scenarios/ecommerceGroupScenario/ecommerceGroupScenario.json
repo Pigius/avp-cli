@@ -1,6 +1,6 @@
 {
   "validationMode": "STRICT",
-  "policyStoreDescription": "Policy store for the Context Scenario, created via avp-cli tool",
+  "policyStoreDescription": "Policy store for the Group Scenario, created via avp-cli tool",
   "name": "Ecommerce with Group Usage Scenario",
   "description": "This scenario demonstrates the use of Groups in AWS Verified Permissions. It allows customers who belong to the VIP group to preorder products.",
   "schemaPath": "./scenarios/ecommerceGroupScenario/schema.json",
