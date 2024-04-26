@@ -617,6 +617,7 @@ export const useScenario = async (
   appClientId = null
 ) => {
   const scenarioPath = `./scenarios/${scenarioName}/${scenarioName}.json`;
+  console.log(scenarioPath);
   const scenarioData = fs.readFileSync(scenarioPath, "utf-8");
   const scenario = JSON.parse(scenarioData);
 
@@ -641,6 +642,13 @@ export const useScenario = async (
         await handleTemplateLinkedPoliciesScenario(policyStoreId, scenario);
       } else if (scenarioName === "ecommerceCognitoIntegrationScenario") {
         await handleCognitoIntegrationScenario(
+          policyStoreId,
+          scenario,
+          userPoolArn,
+          appClientId
+        );
+      } else if (scenarioName === "ecommerceCognitoGroupsScenario") {
+        await handleCognitoGroupsScenario(
           policyStoreId,
           scenario,
           userPoolArn,
@@ -726,18 +734,30 @@ export const createIdentitySource = async (
   policyStoreId,
   principalEntityType,
   userPoolArn,
-  appClientId
+  appClientId,
+  groupEntityType = null
 ) => {
-  const input = {
-    policyStoreId,
-    principalEntityType: principalEntityType,
-    configuration: {
-      cognitoUserPoolConfiguration: {
-        userPoolArn: userPoolArn,
-        clientIds: [appClientId],
-      },
+  const configuration = {
+    cognitoUserPoolConfiguration: {
+      userPoolArn: userPoolArn,
+      clientIds: [appClientId],
     },
   };
+
+  if (groupEntityType) {
+    configuration.cognitoUserPoolConfiguration["groupConfiguration"] = {
+      groupEntityType: groupEntityType,
+    };
+  }
+
+  const input = {
+    policyStoreId,
+    principalEntityType,
+    configuration: configuration,
+  };
+
+  console.log(input);
+
   const command = new CreateIdentitySourceCommand(input);
 
   try {
@@ -913,14 +933,42 @@ export const isAuthorizedWithToken = async (testFilePath) => {
     );
     return;
   }
-  if (input.identityToken === "your-identity-token") {
+  console.log(input);
+  if (
+    input.identityToken === "IDENTITY_TOKEN_HERE" &&
+    input.accessToken === "ACCESS_TOKEN_HERE"
+  ) {
     console.error(
-      "Please set the 'your-identity-token' in your JSON file before proceeding."
+      "Add access token or id token in your JSON file before proceeding."
     );
     return;
   }
 
-  const command = new IsAuthorizedWithTokenCommand(input);
+  const inputaaa = {
+    accessToken:
+      "eyJraWQiOiJWVzdWT0xvbVU1OVRiemg0OVMzdW02MjdpSzVIeG5sR2txTzZRNFZnTHVrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJmMjQ1YTQ1NC05MGMxLTcwODQtNzcwOS0xZGZiZmRiMTA5MzAiLCJjb2duaXRvOmdyb3VwcyI6WyJsb2FuX2NyZWF0b3JzIl0sImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbVwvZXUtd2VzdC0xX3NYVkM0alVEZiIsImNsaWVudF9pZCI6IjViMzN2MmdmMGNyMWM0bjZxajA0cmFqamhmIiwib3JpZ2luX2p0aSI6ImUwYmE3MjgxLTMzMTctNGZjYy04NDk3LTMxMjZlMWY5NmUwOSIsImV2ZW50X2lkIjoiNzM0ZGJmMGYtNmEyOS00MjNlLTg0MTMtZTAxODgxMmM1NDZhIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTcxNDE2NjY5NiwiZXhwIjoxNzE0MTcwMjk1LCJpYXQiOjE3MTQxNjY2OTYsImp0aSI6IjM2NWRlMWRlLWE3YWUtNGIzZS04ZDNhLWI1NThhNTQwNDcwYSIsInVzZXJuYW1lIjoiZGFuaWVsIn0.A06BOgfQwdrmjTX7GFfZ12dA0eL5ODICF9RGSGaNcx7hZwhJVQtgA2KRsvxLbpgM3Ddx_2nhp3ZR4Ij1kGscgBti3uxVlu5RVtPlQ6dCHARvxqKOeiKJ7PlVQcBnJ6oJukDYgd_5q32EXjGg73jc_efyoWa-zdWDFNblKPU9Ecnn2gDonvVnzl29Mchp28qGvWAsOrfo4tH5DQ-p5Sm11-Cd8LcewELBipk7A2wIui2t_VcM1s3mXaa0yNUwyLaa_U7rtFBivxKurcYlfh16eLx0Z39VHA6M1fGlUMNY7NotBM3EA70UVSbdOxs6TRHL-_Aee6n-XED1D8KOIheKrg",
+    policyStoreId: "4HPncnoCXP4oXMwamNYjUS",
+    action: { actionType: "loan_api::Action", actionId: "post /loan" },
+    resource: { entityType: "loan_api::Application", entityId: "loan_api" },
+    context: undefined,
+  };
+
+  const broken = {
+    accessToken:
+      "eyJraWQiOiJWVzdWT0xvbVU1OVRiemg0OVMzdW02MjdpSzVIeG5sR2txTzZRNFZnTHVrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJmMjQ1YTQ1NC05MGMxLTcwODQtNzcwOS0xZGZiZmRiMTA5MzAiLCJjb2duaXRvOmdyb3VwcyI6WyJsb2FuX2NyZWF0b3JzIl0sImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbVwvZXUtd2VzdC0xX3NYVkM0alVEZiIsImNsaWVudF9pZCI6IjViMzN2MmdmMGNyMWM0bjZxajA0cmFqamhmIiwib3JpZ2luX2p0aSI6ImUwYmE3MjgxLTMzMTctNGZjYy04NDk3LTMxMjZlMWY5NmUwOSIsImV2ZW50X2lkIjoiNzM0ZGJmMGYtNmEyOS00MjNlLTg0MTMtZTAxODgxMmM1NDZhIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTcxNDE2NjY5NiwiZXhwIjoxNzE0MTcwMjk1LCJpYXQiOjE3MTQxNjY2OTYsImp0aSI6IjM2NWRlMWRlLWE3YWUtNGIzZS04ZDNhLWI1NThhNTQwNDcwYSIsInVzZXJuYW1lIjoiZGFuaWVsIn0.A06BOgfQwdrmjTX7GFfZ12dA0eL5ODICF9RGSGaNcx7hZwhJVQtgA2KRsvxLbpgM3Ddx_2nhp3ZR4Ij1kGscgBti3uxVlu5RVtPlQ6dCHARvxqKOeiKJ7PlVQcBnJ6oJukDYgd_5q32EXjGg73jc_efyoWa-zdWDFNblKPU9Ecnn2gDonvVnzl29Mchp28qGvWAsOrfo4tH5DQ-p5Sm11-Cd8LcewELBipk7A2wIui2t_VcM1s3mXaa0yNUwyLaa_U7rtFBivxKurcYlfh16eLx0Z39VHA6M1fGlUMNY7NotBM3EA70UVSbdOxs6TRHL-_Aee6n-XED1D8KOIheKrg",
+    policyStoreId: "WKdpLbZEBF9W7XQWyRSXy1",
+    action: {
+      actionType: "ManagementPlatform::Action",
+      actionId: "View",
+    },
+    resource: {
+      entityType: "ManagementPlatform::Document",
+      entityId: "loan_api",
+    },
+    context: undefined,
+  };
+
+  const command = new IsAuthorizedWithTokenCommand(inputaaa);
 
   try {
     console.log("Making authorization decision with token...");
@@ -948,11 +996,60 @@ export const handleCognitoIntegrationScenario = async (
   appClientId
 ) => {
   try {
-    const identityResponse = await createIdentitySource(
+    await createIdentitySource(
       policyStoreId,
       scenario.principalEntityType,
       userPoolArn,
       appClientId
+    );
+    const policies = [];
+
+    for (const policy of scenario.policies) {
+      const createdPolicy = await createStaticPolicy(
+        policyStoreId,
+        policy.path,
+        policy.description,
+        false
+      );
+      console.log(`Static policy created with ID: ${createdPolicy.policyId}`);
+      policies.push(createdPolicy);
+    }
+    const table = new Table({
+      head: ["Policy ID", "Policy Store ID", "Created Date"],
+      colWidths: [40, 40, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
+    });
+    for (const policy of policies) {
+      table.push([
+        policy.policyId,
+        policyStoreId,
+        formatDate(policy.createdDate),
+      ]);
+    }
+    console.log(table.toString());
+    console.log(
+      `Generating of the ${scenario.scenarioName} is finished. Open the AWS console to play around with that.`
+    );
+    console.log(generateTestMessage(scenario));
+  } catch (error) {
+    console.error(`Scenario execution failed: ${error.message}`);
+  }
+};
+
+export const handleCognitoGroupsScenario = async (
+  policyStoreId,
+  scenario,
+  userPoolArn,
+  appClientId
+) => {
+  try {
+    await createIdentitySource(
+      policyStoreId,
+      scenario.principalEntityType,
+      userPoolArn,
+      appClientId,
+      scenario.groupEntityType
     );
     const policies = [];
 

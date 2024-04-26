@@ -1,0 +1,9 @@
+{
+  "validationMode": "STRICT",
+  "policyStoreDescription": "Policy store for the Cognito Group Scenario, created via avp-cli tool",
+  "name": "Ecommerce Cognito Group Scenario",
+  "description": "This is a basic scenario with a group cognito management platform schema and two policies.",
+  "schemaPath": "./scenarios/ecommerceCognitoGroupsScenario/schema.json",
+  "principalEntityType": "ManagementPlatform::User",
+  "groupEntityType": "ManagementPlatform::Group"
+}

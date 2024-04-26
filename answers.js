@@ -113,6 +113,11 @@ export const getAnswers = () => {
                   value: "ecommerceCognitoIntegrationScenario",
                 },
                 {
+                  name: "Ecommerce with Cognito Groups Scenario",
+                  value: "ecommerceCognitoGroupsScenario",
+                },
+
+                {
                   name: "Ecommerce with Hierarchy and ABAC Scenario",
                   value: "ecommerceHierarchyAndAbacScenario",
                 },
@@ -128,7 +133,9 @@ export const getAnswers = () => {
             if (scenarioAnswers.scenario === "back") {
               return getAnswers();
             } else if (
-              scenarioAnswers.scenario === "ecommerceCognitoIntegrationScenario"
+              scenarioAnswers.scenario ===
+                "ecommerceCognitoIntegrationScenario" ||
+              scenarioAnswers.scenario === "ecommerceCognitoGroupsScenario"
             ) {
               return inquirer
                 .prompt([
@@ -505,6 +512,7 @@ export const getAnswers = () => {
               },
               when: (answers) =>
                 answers.scenario === "ecommerceCognitoIntegrationScenario" ||
+                answers.scenario === "ecommerceCognitoGroupsScenario" ||
                 answers.action === "createIdentitySource" ||
                 answers.action === "updateIdentitySource",
             },
@@ -520,8 +528,16 @@ export const getAnswers = () => {
               },
               when: (answers) =>
                 answers.scenario === "ecommerceCognitoIntegrationScenario" ||
+                answers.scenario === "ecommerceCognitoGroupsScenario" ||
                 answers.action === "createIdentitySource" ||
                 answers.action === "updateIdentitySource",
+            },
+            {
+              name: "groupEntityType",
+              message:
+                "Enter the entity type for groups, or press enter to skip",
+              type: "input",
+              when: (answers) => answers.action === "createIdentitySource",
             },
           ])
           .then((answers) => {

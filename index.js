@@ -106,7 +106,8 @@ const interactiveMode = async () => {
             answers.policyStoreId,
             answers.principalEntityType,
             answers.userPoolArn,
-            answers.appClientId
+            answers.appClientId,
+            answers.groupEntityType
           );
           break;
         case "updateIdentitySource":
@@ -137,6 +138,13 @@ const interactiveMode = async () => {
         case "ecommerceCognitoIntegrationScenario":
           await useScenario(
             "ecommerceCognitoIntegrationScenario",
+            answers.userPoolArn,
+            answers.appClientId
+          );
+          break;
+        case "ecommerceCognitoGroupsScenario":
+          await useScenario(
+            "ecommerceCognitoGroupsScenario",
             answers.userPoolArn,
             answers.appClientId
           );
