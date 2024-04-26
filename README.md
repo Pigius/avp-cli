@@ -132,6 +132,33 @@ Making batch authorization decisions...
 │ DENY     │ [Policy IDs]                 │                    │ [Policy Store ID]            │ [Principal]                  │ [Action]                     │ [Resource]                   │ [Context]                    │
 └──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
 
+```
+
+## Using the `batchIsAuthorizedWithToken` Action
+
+The `batchIsAuthorizedWithToken` action enables batch processing of authorization decisions using tokens provided by an external identity source, such as Amazon Cognito. This function is helpful when you need to authorize multiple actions in one go, based on the authenticated principal's identity token or access token.
+
+### How to use `batchIsAuthorizedWithToken`:
+
+- Create a JSON file following the structure specified in `structureBatchAuthorizationWithTokenRequest.json`. This file should contain your `policyStoreId`, an optional `identityToken` or `accessToken`, and a list of requests that you wish to authorize in a batch.
+- Within the JSON file, define the entities (resources and/or principals) involved in the authorization, as well as the requests array detailing action types, resource identifiers, and any contextual information required for the authorization checks.
+- With the JSON file ready, invoke the `batchIsAuthorizedWithToken` action from the AVP CLI tool by selecting the manual approach.
+- Limitation: The `batchIsAuthorizedWithToken` action can process up to 30 requests at a time. Ensure that your JSON file does not contain more than 30 requests to avoid errors.
+
+Run the following commands in your console to initialize the CLI tool and execute the batch authorization with a token:
+
+```bash
+? What would you like to do? Manual approach
+? What would you like to do? Make a batch authorization decision with Cognito Identity Token
+? Enter the path for the batch authorization with token json test file (e.g., structureBatchAuthorizationWithTokenRequest.json)
+Making batch authorization decisions...
+┌──────────┬──────────────────────────────┬────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│ Decision │ Determining Policies         │ Errors             │ Policy Store ID              │ Principal                    │ Action                       │ Resource                     │ Context                      │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ ALLOW    │ [Policy IDs]                 │                    │ [Policy Store ID]            │ [Principal]                  │ [Action]                     │ [Resource]                   │ [Context]                    │
+├──────────┼──────────────────────────────┼────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ DENY     │ [Policy IDs]                 │                    │ [Policy Store ID]            │ [Principal]                  │ [Action]                     │ [Resource]                   │ [Context]                    │
+└──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
 
 ```
 
