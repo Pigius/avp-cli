@@ -1,5 +1,6 @@
 import {
   BatchIsAuthorizedCommand,
+  BatchIsAuthorizedWithTokenCommand,
   CreateIdentitySourceCommand,
   DeleteIdentitySourceCommand,
   CreatePolicyCommand,
@@ -862,6 +863,39 @@ export const batchIsAuthorized = async (batchTestFilePath) => {
 
   try {
     console.log("Making batch authorization decision...");
+    const response = await client.send(command);
+
+    handleBatchAuthorizationResponse(response, input.policyStoreId);
+  } catch (error) {
+    console.error(`Failed to make authorization decision: ${error.message}`);
+  }
+};
+
+export const batchIsAuthorizedWithToken = async (
+  batchWithTokenTestFilePath
+) => {
+  const fileContent = fs.readFileSync(batchWithTokenTestFilePath, "utf8");
+  const input = JSON.parse(fileContent);
+
+  if (input.policyStoreId === "your-policy-store-id") {
+    console.error(
+      "Please set the 'policyStoreId' in your JSON file before proceeding."
+    );
+    return;
+  }
+
+  // batch authorization with token allows to process up to 30 authorization decisions for a single principal or resource in a single API call.
+  if (input.requests && input.requests.length > 30) {
+    console.error(
+      "Batch request limit exceeded. Only up to 30 requests are allowed."
+    );
+    return;
+  }
+
+  const command = new BatchIsAuthorizedWithTokenCommand(input);
+
+  try {
+    console.log("Making batch with token authorization decision...");
     const response = await client.send(command);
 
     handleBatchAuthorizationResponse(response, input.policyStoreId);
