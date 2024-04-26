@@ -1,7 +1,7 @@
 {
   "name": "avp-cli",
-  "version": "2.6.0",
-  "description": "Small CLI to help interacts with the AWS Verified Permissions (AVP) service.",
+  "version": "2.6.1",
+  "description": "Small CLI to help interacts with the Amazon Verified Permissions (AVP) service.",
   "main": "index.js",
   "type": "module",
   "bin": {

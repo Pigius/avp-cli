@@ -34,7 +34,7 @@ import {
 
 console.log("🚀 Welcome to the AVP CLI Tool!");
 console.log(
-  "Designed to streamline your interactions with the AWS Verified Permissions (AVP) service."
+  "Designed to streamline your interactions with the Amazon Verified Permissions (AVP) service."
 );
 console.log(
   "🔧 Create, manage, and delete policy stores, schemas, and policies. Plus, deploy and test with predefined scenarios!"
