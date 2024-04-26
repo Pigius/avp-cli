@@ -1,10 +1,10 @@
 # AVP CLI Tool
 
-This is a command-line interface (CLI) tool designed to interact with the AWS Verified Permissions (AVP) service. You can use it to create, manage, and delete policy stores, schemas, and policies.
+This is a command-line interface (CLI) tool designed to interact with the Amazon Verified Permissions (AVP) service. You can use it to create, manage, and delete policy stores, schemas, and policies.
 
 ## Big Picture
 
-The [AWS Verified Permissions (AVP)](https://aws.amazon.com/verified-permissions/) service is a powerful tool for managing permissions across your AWS resources. However, not everyone prefers to interact with it through the AWS console. Some developers prefer to quickly prototype and check something using a command-line interface, which can be faster and more flexible. This tool is designed to meet that need.
+The [Amazon Verified Permissions (AVP)](https://aws.amazon.com/verified-permissions/) service is a powerful tool for managing permissions across your AWS resources. However, not everyone prefers to interact with it through the AWS console. Some developers prefer to quickly prototype and check something using a command-line interface, which can be faster and more flexible. This tool is designed to meet that need.
 
 This tool is intended for learning and prototyping. It provides a quick and easy way to interact with the AVP service, allowing you to create, manage, and delete policy stores, schemas, and policies. However, it's not intended for production workloads.
 
@@ -45,7 +45,7 @@ AWS_PROFILE=personal avp-cli
 ```bash
 ➜  avp-cli git:(main) ✗ AWS_PROFILE=personal avp-cli
 🚀 Welcome to the AVP CLI Tool!
-Designed to streamline your interactions with the AWS Verified Permissions (AVP) service.
+Designed to streamline your interactions with the Amazon Verified Permissions (AVP) service.
 🔧 Create, manage, and delete policy stores, schemas, and policies. Plus, deploy and test with predefined scenarios!
 ⚠️ Ensure your AWS credentials are correctly set up before proceeding.
 ? What would you like to do? (Use arrow keys)
@@ -57,7 +57,7 @@ Designed to streamline your interactions with the AWS Verified Permissions (AVP)
 
 ## Usage
 
-The AVP CLI Tool supports all API operations provided by the AWS Verified Permissions service. Upon launching, it prompts users to select from a comprehensive list of actions, including:
+The AVP CLI Tool supports all API operations provided by the Amazon Verified Permissions service. Upon launching, it prompts users to select from a comprehensive list of actions, including:
 
 Making authorization decisions (with or without Cognito Identity Token)
 Using prepared scenarios
@@ -77,7 +77,7 @@ When you run the tool, it will prompt you to choose an action and then ask for a
 
 ## Testing with the isAuthorized Action
 
-The most critical aspect of testing the AWS Verified Permissions (AVP) service is verifying whether specific actions are authorized based on the policies you've set up. The AVP CLI Tool provides a dedicated action for this purpose: isAuthorized.
+The most critical aspect of testing the Amazon Verified Permissions (AVP) service is verifying whether specific actions are authorized based on the policies you've set up. The AVP CLI Tool provides a dedicated action for this purpose: isAuthorized.
 
 By using the `isAuthorized` action, you can submit an authorization request to check against your policy store. This request will evaluate the policies within the store and determine if the action is allowed or denied based on the conditions you've defined.
 
@@ -107,7 +107,7 @@ Making authorization decision...
 
 ## Using the `batchIsAuthorized` Action
 
-The `batchIsAuthorized` action in the AVP CLI Tool allows you to make authorization decisions for multiple requests in a single operation. This is particularly useful when you need to evaluate a batch of authorization requests simultaneously, improving efficiency and reducing the number of individual calls to the AWS Verified Permissions service.
+The `batchIsAuthorized` action in the AVP CLI Tool allows you to make authorization decisions for multiple requests in a single operation. This is particularly useful when you need to evaluate a batch of authorization requests simultaneously, improving efficiency and reducing the number of individual calls to the Amazon Verified Permissions service.
 
 How to use `batchIsAuthorized`:
 
@@ -133,6 +133,20 @@ Making batch authorization decisions...
 └──────────┴──────────────────────────────┴────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴──────────────────────────────┘
 
 ```
+
+{
+"policyStoreId": "Nc3gsTLjat4WHyNyfT1KYX",
+"principalEntityType": "DocumentManagementPlatform::User",
+"configuration": {
+"cognitoUserPoolConfiguration": {
+"userPoolArn": "arn:aws:cognito-idp:eu-west-1:862403288926:userpool/eu-west-1_sXVC4jUDf",
+"clientIds": [
+"5b33v2gf0cr1c4n6qj04rajjhf"
+]
+}
+},
+"clientToken": "7c823fb3-c206-4ff1-a069-427b23659326"
+}
 
 ## Using the `batchIsAuthorizedWithToken` Action
 
@@ -173,7 +187,7 @@ Upon the successful execution of each scenario, the AVP CLI Tool will display a 
 ```bash
 ➜  avp-cli git:(main) ✗ AWS_PROFILE=personal avp-cli
 🚀 Welcome to the AVP CLI Tool!
-Designed to streamline your interactions with the AWS Verified Permissions (AVP) service.
+Designed to streamline your interactions with the Amazon Verified Permissions (AVP) service.
 🔧 Create, manage, and delete policy stores, schemas, and policies. Plus, deploy and test with predefined scenarios!
 ⚠️ Ensure your AWS credentials are correctly set up before proceeding.
 ? What would you like to do? Use prepared scenarios
@@ -203,15 +217,15 @@ Consider testing it with our prepared test scenarios:
 
 ### Added scenarios
 
-| Scenario Name                                                                                                                               | Description                                                                                                                                                                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Documents Scenario](scenarios/documentsScenario/documentsScenario.json)                                                                    | This is a basic scenario with a document management platform schema and two policies.                                                                                                                                                                                                                                                              |
-| [Ecommerce with Context usage Scenario](scenarios/ecommerceContextScenario/ecommerceContextScenario.json)                                   | This scenario demonstrates the use of context in AVP. It allows customers to view products only when they are in the US region.                                                                                                                                                                                                                    |
-| [Ecommerce with Group usage Scenario](scenarios/ecommerceGroupScenario/ecommerceGroupScenario.json)                                         | This scenario demonstrates the use of Groups in AWS Verified Permissions. It allows customers who belong to the VIP group to preorder products.                                                                                                                                                                                                    |
-| [Ecommerce with Policy Template usage Scenario](scenarios/ecommercePolicyTemplateScenario/ecommercePolicyTemplateScenario.json)             | This scenario demonstrates the use of policy templates and template-linked policies in AWS Verified Permissions. It allows sellers to list their own products.                                                                                                                                                                                     |
-| [Ecommerce with Cognito Integration usage Scenario](scenarios/ecommerceCognitoIntegrationScenario/ecommerceCognitoIntegrationScenario.json) | This scenario demonstrates the use of Cognito integration in AWS Verified Permissions. It allows sellers to discount if they have agreed discount privilege. Refer to this [blogpost](https://dev.to/aws-builders/authorization-and-amazon-verified-permissions-a-new-way-to-manage-permissions-part-viii-integration-with-cognito-pgb) for setup. |
-| [Ecommerce with Hierarchy and ABAC Scenario](scenarios/ecommerceHierarchyAndAbacScenario/ecommerceHierarchyAndAbacScenario.json)            | This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in AWS Verified Permissions. It allows sellers to sell car if department matches the car's department.                                                                                                                                                                    |
-| [Ecommerce with Batch Authorization Scenario](scenarios/ecommerceBatchScenario/ecommerceBatchScenario.json)                                 | This scenario demonstrates the use of Batch Authorization in AWS Verified Permissions.                                                                                                                                                                                                                                                             |
+| Scenario Name                                                                                                                               | Description                                                                                                                                                                                                                                                                                                                                           |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Documents Scenario](scenarios/documentsScenario/documentsScenario.json)                                                                    | This is a basic scenario with a document management platform schema and two policies.                                                                                                                                                                                                                                                                 |
+| [Ecommerce with Context usage Scenario](scenarios/ecommerceContextScenario/ecommerceContextScenario.json)                                   | This scenario demonstrates the use of context in AVP. It allows customers to view products only when they are in the US region.                                                                                                                                                                                                                       |
+| [Ecommerce with Group usage Scenario](scenarios/ecommerceGroupScenario/ecommerceGroupScenario.json)                                         | This scenario demonstrates the use of Groups in Amazon Verified Permissions. It allows customers who belong to the VIP group to preorder products.                                                                                                                                                                                                    |
+| [Ecommerce with Policy Template usage Scenario](scenarios/ecommercePolicyTemplateScenario/ecommercePolicyTemplateScenario.json)             | This scenario demonstrates the use of policy templates and template-linked policies in Amazon Verified Permissions. It allows sellers to list their own products.                                                                                                                                                                                     |
+| [Ecommerce with Cognito Integration usage Scenario](scenarios/ecommerceCognitoIntegrationScenario/ecommerceCognitoIntegrationScenario.json) | This scenario demonstrates the use of Cognito integration in Amazon Verified Permissions. It allows sellers to discount if they have agreed discount privilege. Refer to this [blogpost](https://dev.to/aws-builders/authorization-and-amazon-verified-permissions-a-new-way-to-manage-permissions-part-viii-integration-with-cognito-pgb) for setup. |
+| [Ecommerce with Hierarchy and ABAC Scenario](scenarios/ecommerceHierarchyAndAbacScenario/ecommerceHierarchyAndAbacScenario.json)            | This scenario demonstrates the use of Hierarchy and ABAC (with Entities) in Amazon Verified Permissions. It allows sellers to sell car if department matches the car's department.                                                                                                                                                                    |
+| [Ecommerce with Batch Authorization Scenario](scenarios/ecommerceBatchScenario/ecommerceBatchScenario.json)                                 | This scenario demonstrates the use of Batch Authorization in Amazon Verified Permissions.                                                                                                                                                                                                                                                             |
 
 ### Note
 
@@ -228,7 +242,7 @@ A scenario is defined in a JSON file with the following structure:
   "validationMode": "STRICT",
   "policyStoreDescription": "Policy store for the Context Scenario, created via avp-cli tool",
   "name": "Ecommerce with Context usage Scenario",
-  "description": "This scenario demonstrates the use of context in AWS Verified Permissions. It allows customers to view products only when they are in the US region.",
+  "description": "This scenario demonstrates the use of context in Amazon Verified Permissions. It allows customers to view products only when they are in the US region.",
   "schemaPath": "./scenarios/ecommerceContextScenario/schema.json",
   "policies": [
     {
@@ -300,7 +314,7 @@ Making batch authorization decision...
 
 ## Roles and Permissions
 
-This tool requires certain permissions to interact with the AWS Verified Permissions service. It is recommended to use this tool on an AWS sandbox account where admin access is granted. Always follow the principle of least privilege and only grant the necessary permissions for the tasks you need to perform.
+This tool requires certain permissions to interact with the Amazon Verified Permissions service. It is recommended to use this tool on an AWS sandbox account where admin access is granted. Always follow the principle of least privilege and only grant the necessary permissions for the tasks you need to perform.
 
 ## Next Steps
 
