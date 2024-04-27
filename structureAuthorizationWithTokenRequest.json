@@ -1,13 +1,14 @@
 {
-    "policyStoreId": "your-policy-store-id",
-    "identityToken": "IDENTITY_TOKEN_HERE",
+    "policyStoreId": "WKdpLbZEBF9W7XQWyRSXy1",
+    "accessToken": "eyJraWQiOiJWVzdWT0xvbVU1OVRiemg0OVMzdW02MjdpSzVIeG5sR2txTzZRNFZnTHVrPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJmMjQ1YTQ1NC05MGMxLTcwODQtNzcwOS0xZGZiZmRiMTA5MzAiLCJjb2duaXRvOmdyb3VwcyI6WyJsb2FuX2NyZWF0b3JzIl0sImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC5ldS13ZXN0LTEuYW1hem9uYXdzLmNvbVwvZXUtd2VzdC0xX3NYVkM0alVEZiIsImNsaWVudF9pZCI6IjViMzN2MmdmMGNyMWM0bjZxajA0cmFqamhmIiwib3JpZ2luX2p0aSI6ImUwYmE3MjgxLTMzMTctNGZjYy04NDk3LTMxMjZlMWY5NmUwOSIsImV2ZW50X2lkIjoiNzM0ZGJmMGYtNmEyOS00MjNlLTg0MTMtZTAxODgxMmM1NDZhIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiIsImF1dGhfdGltZSI6MTcxNDE2NjY5NiwiZXhwIjoxNzE0MTcwMjk1LCJpYXQiOjE3MTQxNjY2OTYsImp0aSI6IjM2NWRlMWRlLWE3YWUtNGIzZS04ZDNhLWI1NThhNTQwNDcwYSIsInVzZXJuYW1lIjoiZGFuaWVsIn0.A06BOgfQwdrmjTX7GFfZ12dA0eL5ODICF9RGSGaNcx7hZwhJVQtgA2KRsvxLbpgM3Ddx_2nhp3ZR4Ij1kGscgBti3uxVlu5RVtPlQ6dCHARvxqKOeiKJ7PlVQcBnJ6oJukDYgd_5q32EXjGg73jc_efyoWa-zdWDFNblKPU9Ecnn2gDonvVnzl29Mchp28qGvWAsOrfo4tH5DQ-p5Sm11-Cd8LcewELBipk7A2wIui2t_VcM1s3mXaa0yNUwyLaa_U7rtFBivxKurcYlfh16eLx0Z39VHA6M1fGlUMNY7NotBM3EA70UVSbdOxs6TRHL-_Aee6n-XED1D8KOIheKrg",
+    "identityToken": "eyJraWQiOiJmUGlvQVI2YUFNUDJGNUdzRE1JczV2TE5cL1VhNzl5V3NRS3ZDZVdZdkV3VT0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJmMjQ1YTQ1NC05MGMxLTcwODQtNzcwOS0xZGZiZmRiMTA5MzAiLCJjb2duaXRvOmdyb3VwcyI6WyJsb2FuX2NyZWF0b3JzIl0sImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuZXUtd2VzdC0xLmFtYXpvbmF3cy5jb21cL2V1LXdlc3QtMV9zWFZDNGpVRGYiLCJjb2duaXRvOnVzZXJuYW1lIjoiZGFuaWVsIiwib3JpZ2luX2p0aSI6ImUwYmE3MjgxLTMzMTctNGZjYy04NDk3LTMxMjZlMWY5NmUwOSIsImF1ZCI6IjViMzN2MmdmMGNyMWM0bjZxajA0cmFqamhmIiwiZXZlbnRfaWQiOiI3MzRkYmYwZi02YTI5LTQyM2UtODQxMy1lMDE4ODEyYzU0NmEiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTcxNDE2NjY5NiwiZXhwIjoxNzE0MTcwMjk1LCJpYXQiOjE3MTQxNjY2OTYsImp0aSI6IjU2ODIxYTc4LTBjMGQtNGI0MC04YTcwLTcyMzM1MTFiZjc5MCIsImVtYWlsIjoiZGFuaWVsLmFuaXN6a2lld2ljeisxMjM0QGdtYWlsLmNvbSJ9.t8uR-3MCh1tsfELsJzVZeLoHggakt6fKMy5ArpUIU7FKpG9pe7hlJxJ_GnyJ1N_6rTGRyxbPycUY1EmpZx5y1M0g_DSDO_IpAqXJX_lNzTcHxWFNsM55nDcuCY576aOYJ_p16RdT7NnXgp48if_AteYG_vYid6i2BFFO5xbHvDK0V2R62CGGqGhuSTa_C62n_-PYhE4R9ow8r1xkuGK9RRkJ2ZKyCmQM2-jfnSiFjUR36COLuA1bTz_ARCMtWifuovY2dvbEJP4AKphPMJLnbd-2_GdRW_GReIs8cDG737X1oA8WUZNmJf-JEq06xiJjnSjqyyz4Yipn2lvyVwgXwg",
     "action": {
-        "actionType": "Action::Type",
-        "actionId": "action_id"
+        "actionType": "ManagementPlatform::Action",
+        "actionId": "View"
     },
     "resource": {
-        "entityType": "Resource::Type",
-        "entityId": "resource_id"
+        "entityType": "ManagementPlatform::Document",
+        "entityId": "*"
     },
     "entities": {
         "entityList": []

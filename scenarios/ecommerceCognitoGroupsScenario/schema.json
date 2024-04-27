@@ -1,0 +1,75 @@
+{
+    "BankingTransactionSystem": {
+        "actions": {
+            "Edit": {
+                "appliesTo": {
+                    "principalTypes": [
+                        "User"
+                    ],
+                    "resourceTypes": [
+                        "TransactionRecord"
+                    ],
+                    "context": {
+                        "type": "Record",
+                        "attributes": {}
+                    }
+                },
+                "memberOf": []
+            },
+            "View": {
+                "memberOf": [],
+                "appliesTo": {
+                    "resourceTypes": [
+                        "TransactionRecord"
+                    ],
+                    "principalTypes": [
+                        "User"
+                    ],
+                    "context": {
+                        "attributes": {},
+                        "type": "Record"
+                    }
+                }
+            },
+            "Approve": {
+                "memberOf": [],
+                "appliesTo": {
+                    "resourceTypes": [
+                        "TransactionRecord"
+                    ],
+                    "principalTypes": [
+                        "User"
+                    ],
+                    "context": {
+                        "attributes": {},
+                        "type": "Record"
+                    }
+                }
+            }
+        },
+        "entityTypes": {
+            "TransactionRecord": {
+                "shape": {
+                    "attributes": {},
+                    "type": "Record"
+                },
+                "memberOfTypes": []
+            },
+            "Group": {
+                "shape": {
+                    "type": "Record",
+                    "attributes": {}
+                }
+            },
+            "User": {
+                "memberOfTypes": [
+                    "Group"
+                ],
+                "shape": {
+                    "attributes": {},
+                    "type": "Record"
+                }
+            }
+        }
+    }
+}

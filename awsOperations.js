@@ -30,6 +30,7 @@ import {
 import fs from "fs";
 import path from "path";
 import Table from "cli-table3";
+import os from "os";
 
 const client = new VerifiedPermissionsClient();
 
@@ -303,7 +304,6 @@ export const getIdentitySource = async (
   const command = new GetIdentitySourceCommand(input);
   try {
     const response = await client.send(command);
-
     const table = new Table({
       head: ["Policy Store", "identitySourceId", "Created Date"],
       colWidths: [24, 80, 40],
@@ -617,6 +617,7 @@ export const useScenario = async (
   appClientId = null
 ) => {
   const scenarioPath = `./scenarios/${scenarioName}/${scenarioName}.json`;
+  console.log(scenarioPath);
   const scenarioData = fs.readFileSync(scenarioPath, "utf-8");
   const scenario = JSON.parse(scenarioData);
 
@@ -641,6 +642,13 @@ export const useScenario = async (
         await handleTemplateLinkedPoliciesScenario(policyStoreId, scenario);
       } else if (scenarioName === "ecommerceCognitoIntegrationScenario") {
         await handleCognitoIntegrationScenario(
+          policyStoreId,
+          scenario,
+          userPoolArn,
+          appClientId
+        );
+      } else if (scenarioName === "ecommerceCognitoGroupsScenario") {
+        await handleCognitoGroupsScenario(
           policyStoreId,
           scenario,
           userPoolArn,
@@ -726,18 +734,30 @@ export const createIdentitySource = async (
   policyStoreId,
   principalEntityType,
   userPoolArn,
-  appClientId
+  appClientId,
+  groupEntityType = null
 ) => {
-  const input = {
-    policyStoreId,
-    principalEntityType: principalEntityType,
-    configuration: {
-      cognitoUserPoolConfiguration: {
-        userPoolArn: userPoolArn,
-        clientIds: [appClientId],
-      },
+  const configuration = {
+    cognitoUserPoolConfiguration: {
+      userPoolArn: userPoolArn,
+      clientIds: [appClientId],
     },
   };
+
+  if (groupEntityType) {
+    configuration.cognitoUserPoolConfiguration["groupConfiguration"] = {
+      groupEntityType: groupEntityType,
+    };
+  }
+
+  const input = {
+    policyStoreId,
+    principalEntityType,
+    configuration: configuration,
+  };
+
+  console.log(input);
+
   const command = new CreateIdentitySourceCommand(input);
 
   try {
@@ -884,6 +904,11 @@ export const batchIsAuthorizedWithToken = async (
     return;
   }
 
+  if (input.accessToken === "ACCESS_TOKEN_HERE") {
+    console.error("Add access token in your JSON file before proceeding.");
+    return;
+  }
+
   // batch authorization with token allows to process up to 30 authorization decisions for a single principal or resource in a single API call.
   if (input.requests && input.requests.length > 30) {
     console.error(
@@ -898,7 +923,7 @@ export const batchIsAuthorizedWithToken = async (
     console.log("Making batch with token authorization decision...");
     const response = await client.send(command);
 
-    handleBatchAuthorizationResponse(response, input.policyStoreId);
+    handleBatchAuthorizationWithTokenResponse(response, input);
   } catch (error) {
     console.error(`Failed to make authorization decision: ${error.message}`);
   }
@@ -913,23 +938,19 @@ export const isAuthorizedWithToken = async (testFilePath) => {
     );
     return;
   }
-  if (input.identityToken === "your-identity-token") {
-    console.error(
-      "Please set the 'your-identity-token' in your JSON file before proceeding."
-    );
+  if (input.accessToken === "ACCESS_TOKEN_HERE") {
+    console.error("Add access token in your JSON file before proceeding.");
     return;
   }
 
   const command = new IsAuthorizedWithTokenCommand(input);
 
   try {
-    console.log("Making authorization decision with token...");
     const response = await client.send(command);
 
-    handleAuthorizationResponse(
+    handleAuthorizationWithTokenResponse(
       response,
       input.policyStoreId,
-      input.principal,
       input.action,
       input.resource,
       input.context
@@ -948,7 +969,7 @@ export const handleCognitoIntegrationScenario = async (
   appClientId
 ) => {
   try {
-    const identityResponse = await createIdentitySource(
+    await createIdentitySource(
       policyStoreId,
       scenario.principalEntityType,
       userPoolArn,
@@ -966,6 +987,77 @@ export const handleCognitoIntegrationScenario = async (
       console.log(`Static policy created with ID: ${createdPolicy.policyId}`);
       policies.push(createdPolicy);
     }
+    const table = new Table({
+      head: ["Policy ID", "Policy Store ID", "Created Date"],
+      colWidths: [40, 40, 40],
+      wordWrap: true,
+      wrapOnWordBoundary: false,
+    });
+    for (const policy of policies) {
+      table.push([
+        policy.policyId,
+        policyStoreId,
+        formatDate(policy.createdDate),
+      ]);
+    }
+    console.log(table.toString());
+    console.log(
+      `Generating of the ${scenario.scenarioName} is finished. Open the AWS console to play around with that.`
+    );
+    console.log(generateTestMessage(scenario));
+  } catch (error) {
+    console.error(`Scenario execution failed: ${error.message}`);
+  }
+};
+
+export const handleCognitoGroupsScenario = async (
+  policyStoreId,
+  scenario,
+  userPoolArn,
+  appClientId
+) => {
+  try {
+    await createIdentitySource(
+      policyStoreId,
+      scenario.principalEntityType,
+      userPoolArn,
+      appClientId,
+      scenario.groupEntityType
+    );
+    const policies = [];
+
+    for (const policy of scenario.policies) {
+      try {
+        const userPoolId = extractUserPoolIdFromArn(userPoolArn);
+
+        const policyTemplateContent = fs.readFileSync(policy.path, "utf8");
+
+        const policyContent = policyTemplateContent.replace(
+          "<user-pool-goes-here>",
+          userPoolId
+        );
+
+        // Write the interpolated policy content to a temporary file
+        const policyFilePath = await writePolicyToFile(policyContent);
+
+        const createdPolicy = await createStaticPolicy(
+          policyStoreId,
+          policyFilePath,
+          policy.description,
+          true
+        );
+
+        // Policy has been created; we can now clean up the temporary file
+        await fs.promises.unlink(policyFilePath);
+
+        if (createdPolicy.policyId) {
+          policies.push(createdPolicy);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    }
+
     const table = new Table({
       head: ["Policy ID", "Policy Store ID", "Created Date"],
       colWidths: [40, 40, 40],
@@ -1033,6 +1125,49 @@ const handleAuthorizationResponse = (
 
   console.log(table.toString());
 };
+const handleAuthorizationWithTokenResponse = (
+  response,
+  policyStoreId,
+  action,
+  resource,
+  context
+) => {
+  const table = new Table({
+    head: [
+      "Decision",
+      "Determining Policies",
+      "Errors",
+      "Policy Store ID",
+      "Principal",
+      "Action",
+      "Resource",
+      "Context",
+    ],
+    colWidths: [10, 30, 20, 30, 30, 30, 30, 30],
+    wordWrap: true,
+    wrapOnWordBoundary: false,
+  });
+
+  const determiningPolicies = response.determiningPolicies
+    .map((policy) => policy.policyId)
+    .join(", ");
+  const errors = response.errors
+    .map((error) => error.errorDescription)
+    .join(", ");
+
+  table.push([
+    response.decision,
+    determiningPolicies,
+    errors,
+    policyStoreId,
+    `${response.principal.entityType}::${response.principal.entityId}`,
+    `${action.actionType}::${action.actionId}`,
+    `${resource.entityType}::${resource.entityId}`,
+    JSON.stringify(context.contextMap),
+  ]);
+
+  console.log(table.toString());
+};
 
 const handleBatchAuthorizationResponse = (response, policyStoreId) => {
   const table = new Table({
@@ -1077,6 +1212,54 @@ const handleBatchAuthorizationResponse = (response, policyStoreId) => {
   console.log(table.toString());
 };
 
+const handleBatchAuthorizationWithTokenResponse = (response, input) => {
+  const table = new Table({
+    head: [
+      "Decision",
+      "Determining Policies",
+      "Errors",
+      "Policy Store ID",
+      "Principal",
+      "Action",
+      "Resource",
+      "Context",
+    ],
+    colWidths: [10, 30, 20, 30, 30, 30, 30, 30],
+    wordWrap: true,
+    wrapOnWordBoundary: false,
+  });
+
+  response.results.forEach((singleResult) => {
+    const determiningPolicies = singleResult.determiningPolicies
+      ? singleResult.determiningPolicies
+          .map((policy) => policy.policyId)
+          .join(", ")
+      : "";
+    const errors = singleResult.errors
+      ? singleResult.errors.map((error) => error.errorDescription).join(", ")
+      : "";
+
+    console.log("SingleResult: ", singleResult);
+
+    table.push([
+      singleResult.decision,
+      determiningPolicies,
+      errors,
+      input.policyStoreId,
+      `${response.principal.entityType}::${response.principal.entityId}`,
+      `${singleResult.request.action.actionType}::${singleResult.request.action.actionId}`,
+      `${singleResult.request.resource.entityType}::${singleResult.request.resource.entityId}`,
+      JSON.stringify(
+        singleResult.request.context
+          ? singleResult.request.context.contextMap
+          : {}
+      ),
+    ]);
+  });
+
+  console.log(table.toString());
+};
+
 const generateTestMessage = (scenario) => {
   let message = "\nConsider testing it with our prepared test scenarios:\n";
   message +=
@@ -1098,3 +1281,22 @@ const formatDate = (dateString) => {
     date.getHours()
   ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 };
+
+function extractUserPoolIdFromArn(userPoolArn) {
+  const arnParts = userPoolArn.split(":");
+  const userPoolId =
+    arnParts.length > 1 ? arnParts[arnParts.length - 1].split("/")[1] : null;
+
+  if (!userPoolId) {
+    throw new Error("Invalid ARN format. Unable to extract User Pool ID.");
+  }
+
+  return userPoolId;
+}
+
+async function writePolicyToFile(policyContent) {
+  const tempDir = os.tmpdir();
+  const tempFilePath = path.join(tempDir, `policy-${Date.now()}.cedar`);
+  await fs.promises.writeFile(tempFilePath, policyContent);
+  return tempFilePath;
+}
