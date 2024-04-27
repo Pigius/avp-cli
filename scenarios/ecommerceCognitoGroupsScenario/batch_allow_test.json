@@ -1,0 +1,36 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "accessToken": "ACCESS_TOKEN_HERE",
+   "requests": [
+      {
+         "action": {
+            "actionType": "BankingTransactionSystem::Action",
+            "actionId": "View"
+         },
+         "resource": {
+            "entityType": "BankingTransactionSystem::TransactionRecord",
+            "entityId": "123"
+         }
+      },
+      {
+         "action": {
+            "actionType": "BankingTransactionSystem::Action",
+            "actionId": "Edit"
+         },
+         "resource": {
+            "entityType": "BankingTransactionSystem::TransactionRecord",
+            "entityId": "123"
+         }
+      },
+      {
+         "action": {
+            "actionType": "BankingTransactionSystem::Action",
+            "actionId": "Approve"
+         },
+         "resource": {
+            "entityType": "BankingTransactionSystem::TransactionRecord",
+            "entityId": "123"
+         }
+      }
+   ]
+}

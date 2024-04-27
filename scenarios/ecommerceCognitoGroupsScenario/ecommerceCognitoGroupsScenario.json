@@ -2,8 +2,43 @@
   "validationMode": "STRICT",
   "policyStoreDescription": "Policy store for the Cognito Group Scenario, created via avp-cli tool",
   "name": "Ecommerce Cognito Group Scenario",
-  "description": "This is a basic scenario with a group cognito management platform schema and two policies.",
+  "description": "This is a basic scenario with a group cognito management platform schema and three policies.",
   "schemaPath": "./scenarios/ecommerceCognitoGroupsScenario/schema.json",
-  "principalEntityType": "ManagementPlatform::User",
-  "groupEntityType": "ManagementPlatform::Group"
+  "principalEntityType": "BankingTransactionSystem::User",
+  "groupEntityType": "BankingTransactionSystem::Group",
+  "policies": [
+    {
+      "path": "./scenarios/ecommerceCognitoGroupsScenario/allow_policy_1.cedar",
+      "description": "Allow users with transaction_viewers Cognito group to view transaction records."
+    },
+    {
+      "path": "./scenarios/ecommerceCognitoGroupsScenario/allow_policy_2.cedar",
+      "description": "Allow users with transaction_viewers Cognito group to approve transaction records."
+    },
+    {
+      "path": "./scenarios/ecommerceCognitoGroupsScenario/allow_policy_3.cedar",
+      "description": "Allow users with transaction_viewers Cognito group to edit transaction records."
+    }    
+  ],
+    "tests": [
+    {
+     "path": "./scenarios/ecommerceCognitoGroupsScenario/allow_test_1.json",
+      "description": "Access for user who has transaction_viewer group can view",
+      "type": "allow"
+    },
+    {
+     "path": "./scenarios/ecommerceCognitoGroupsScenario/allow_test_2.json",
+      "description": "Access for user who has transaction_approve group can approve",
+      "type": "allow"
+    },
+    {
+     "path": "./scenarios/ecommerceCognitoGroupsScenario/allow_test_3.json",
+      "description": "Access for user who has transaction_edit group can edit",
+      "type": "allow"
+    }
+  ],
+  "batchTests": [    {
+     "path": "./scenarios/ecommerceCognitoGroupsScenario/batch_allow_test.json",
+      "description": "Checking multiple actions for a single principal (user can check what actions he can perform on a resource)"
+    }]
 }

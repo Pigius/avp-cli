@@ -1,0 +1,19 @@
+{
+    "policyStoreId": "your-policy-store-id",
+    "accessToken": "ACCESS_TOKEN_HERE",
+    "action": {
+        "actionType": "BankingTransactionSystem::Action",
+        "actionId": "Edit"
+    },
+    "resource": {
+        "entityType": "BankingTransactionSystem::TransactionRecord",
+        "entityId": "*"
+    },
+    "entities": {
+        "entityList": []
+    },
+    "context": {
+        "contextMap": {
+        }
+    }
+}
