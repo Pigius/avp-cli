@@ -756,8 +756,6 @@ export const createIdentitySource = async (
     configuration: configuration,
   };
 
-  console.log(input);
-
   const command = new CreateIdentitySourceCommand(input);
 
   try {
